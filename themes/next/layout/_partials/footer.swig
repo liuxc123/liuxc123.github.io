@@ -18,7 +18,7 @@
     {% endif %}
     <span title="{{ __('post.totalcount') }}">{#
     #}{{ totalcount(site, '0,0.0a') }}{#
-  #}</span>
+  #}&nbsp字</span>
   {% endif %}
 </div>
 
