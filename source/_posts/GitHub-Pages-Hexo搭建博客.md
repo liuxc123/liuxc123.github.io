@@ -1,6 +1,7 @@
 ---
 title: GitHub Pages + Hexo搭建博客
 date: 2018-03-15 10:40:00
+category: hexo
 tags: hexo 
 ---
 # GitHub Pages + Hexo搭建博客
