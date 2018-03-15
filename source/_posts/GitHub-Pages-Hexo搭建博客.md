@@ -201,7 +201,8 @@ $ hexo deploy
 #### 3.2 其他theme
 如果想要使用其他主题，可以使用git clone将别人的主题拷贝到D:\Hexo\themes下，然后将_config.yml中的theme: landscape改为对应的主题名字。
 
-详细步骤可以参考网上的指南。
+下面是next主题的个性化配置教程:
+* [next个性化配置教程](http://shenzekun.cn/hexo的next主题个性化配置教程.html)
 
 ### 四、 优化部署与管理
 #### 4.1 概述
