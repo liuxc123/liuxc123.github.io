@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="hexo," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuxc的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="GitHub Pages + Hexo搭建博客一、 前言这是一篇是单纯地利用GitHub Pages搭建自己独立博客的过程，并没有额外使用独立域名之类的。 如果是小小白，可以先花时间去了解下：  Git GitHub GitHub Pages Hexo Markdown  二、 必要配置2.1 GitHub Pages 仓库2.1.1 创建对应仓库在自己的GitHub账号下创建一个新的仓库，命名为">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub Pages + Hexo搭建博客">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/GitHub-Pages-Hexo搭建博客/index.html">
+<meta property="og:site_name" content="liuxc的博客">
+<meta property="og:description" content="GitHub Pages + Hexo搭建博客一、 前言这是一篇是单纯地利用GitHub Pages搭建自己独立博客的过程，并没有额外使用独立域名之类的。 如果是小小白，可以先花时间去了解下：  Git GitHub GitHub Pages Hexo Markdown  二、 必要配置2.1 GitHub Pages 仓库2.1.1 创建对应仓库在自己的GitHub账号下创建一个新的仓库，命名为">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-16T01:17:28.678Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="GitHub Pages + Hexo搭建博客">
+<meta name="twitter:description" content="GitHub Pages + Hexo搭建博客一、 前言这是一篇是单纯地利用GitHub Pages搭建自己独立博客的过程，并没有额外使用独立域名之类的。 如果是小小白，可以先花时间去了解下：  Git GitHub GitHub Pages Hexo Markdown  二、 必要配置2.1 GitHub Pages 仓库2.1.1 创建对应仓库在自己的GitHub账号下创建一个新的仓库，命名为">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/15/GitHub-Pages-Hexo搭建博客/"/>
+
+
+
+
+
+  <title>GitHub Pages + Hexo搭建博客 | liuxc的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuxc的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/GitHub-Pages-Hexo搭建博客/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuxc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuxc的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">GitHub Pages + Hexo搭建博客</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T10:40:00+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-03-16T09:17:28+08:00">
+                2018-03-16
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/15/GitHub-Pages-Hexo搭建博客/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/03/15/GitHub-Pages-Hexo搭建博客/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,296
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="GitHub-Pages-Hexo搭建博客"><a href="#GitHub-Pages-Hexo搭建博客" class="headerlink" title="GitHub Pages + Hexo搭建博客"></a>GitHub Pages + Hexo搭建博客</h1><h2 id="一、-前言"><a href="#一、-前言" class="headerlink" title="一、 前言"></a>一、 前言</h2><p>这是一篇是单纯地利用GitHub Pages搭建自己独立博客的过程，并没有额外使用独立域名之类的。</p>
+<p>如果是小小白，可以先花时间去了解下：</p>
+<ul>
+<li><a href="https://git-scm.com/book/zh/v2" target="_blank" rel="noopener">Git</a></li>
+<li><a href="https://github.com" target="_blank" rel="noopener">GitHub</a></li>
+<li><a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a></li>
+<li><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">Hexo</a></li>
+<li><a href="https://www.appinn.com/markdown/#autoescape" target="_blank" rel="noopener">Markdown</a></li>
+</ul>
+<h2 id="二、-必要配置"><a href="#二、-必要配置" class="headerlink" title="二、 必要配置"></a>二、 必要配置</h2><h3 id="2-1-GitHub-Pages-仓库"><a href="#2-1-GitHub-Pages-仓库" class="headerlink" title="2.1 GitHub Pages 仓库"></a>2.1 GitHub Pages 仓库</h3><h4 id="2-1-1-创建对应仓库"><a href="#2-1-1-创建对应仓库" class="headerlink" title="2.1.1 创建对应仓库"></a>2.1.1 创建对应仓库</h4><p>在自己的GitHub账号下创建一个新的仓库，命名为username.github.io（username是你的账号名)。</p>
+<p>在这里，要知道，GitHub Pages有两种类型：User/Organization Pages 和 Project Pages，而我所使用的是User Pages。</p>
+<p>简单来说，User Pages 与 Project Pages的区别是：</p>
+<ol>
+<li>User Pages 是用来展示用户的，而 Project Pages 是用来展示项目的。</li>
+<li>用于存放 User Pages 的仓库必须使用username.github.io的命名规则，而 Project Pages 则没有特殊的要求。</li>
+<li>User Pages 将使用仓库的 master 分支，而 Project Pages 将使用 gh-pages 分支。</li>
+<li>User Pages 通过 http(s)://username.github.io 进行访问，而 Projects Pages通过 http(s)://username.github.io/projectname 进行访问。</li>
+</ol>
+<h4 id="2-1-2-相关资料"><a href="#2-1-2-相关资料" class="headerlink" title="2.1.2 相关资料"></a>2.1.2 相关资料</h4><ul>
+<li><a href="https://help.github.com/articles/user-organization-and-project-pages/" target="_blank" rel="noopener">GitHub Pages Basics / User, Organization, and Project Pages</a></li>
+</ul>
+<h3 id="2-2-Git"><a href="#2-2-Git" class="headerlink" title="2.2 Git"></a>2.2 Git</h3><h4 id="2-2-1-安装-Git"><a href="#2-2-1-安装-Git" class="headerlink" title="2.2.1 安装 Git"></a>2.2.1 安装 Git</h4><p>在windows下安装git比较常用的有两种方式：</p>
+<ol>
+<li><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git 官方版本的安装</a></li>
+<li><a href="https://desktop.github.com" target="_blank" rel="noopener">GitHub for Windows</a></li>
+</ol>
+<h4 id="2-2-2-配置-Git"><a href="#2-2-2-配置-Git" class="headerlink" title="2.2.2 配置 Git"></a>2.2.2 配置 Git</h4><p>当安装完Git应该做的第一件事情就是设置用户名称和邮件地址。这样做很重要，因为每一个Git的提交都会使用这些信息，并且它会写入你的每一次提交中，不可更改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name &quot;username&quot;</span><br><span class="line">$ git config --global user.email &quot;username@example.com&quot;</span><br></pre></td></tr></table></figure>
+<p>对于user.email，因为在GitHub的commits信息上是可见的，所以如果你不想让人知道你的email，可以Keeping your email address private:</p>
+<ol>
+<li>在GitHub右上方点击你的头像，选择”Settings”；</li>
+<li>在右边的”Personal settings”侧边栏选择”Emails”；</li>
+<li>选择”Keep my email address private”。</li>
+</ol>
+<p>这样，你就可以使用如下格式的email进行配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.email &quot;username@users.noreply.github.com&quot;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-3-相关资料"><a href="#2-2-3-相关资料" class="headerlink" title="2.2.3 相关资料"></a>2.2.3 相关资料</h4><ul>
+<li><a href="https://git-scm.com/book/zh/v2/起步-安装-Git" target="_blank" rel="noopener">安装 Git</a></li>
+<li><a href="https://git-scm.com/book/zh/v2/起步-初次运行-Git-前的配置" target="_blank" rel="noopener">配置 Git</a></li>
+<li><a href="https://help.github.com/articles/setting-your-commit-email-address-in-git/" target="_blank" rel="noopener">Setting your email in Git</a></li>
+<li><a href="https://help.github.com/articles/setting-your-commit-email-address-on-github/" target="_blank" rel="noopener">Keeping your email address private</a></li>
+</ul>
+<h3 id="2-3-Git-与-GitHub"><a href="#2-3-Git-与-GitHub" class="headerlink" title="2.3 Git 与 GitHub"></a>2.3 Git 与 GitHub</h3><h4 id="2-3-1-git与github的区别"><a href="#2-3-1-git与github的区别" class="headerlink" title="2.3.1 git与github的区别"></a>2.3.1 git与github的区别</h4><p>这里，我们要区分清楚git与github。</p>
+<p>git是一个版本控制的工具，而github有点类似于远程仓库，用于存放用git管理的各种项目。</p>
+<h4 id="2-3-2-与github建立联系"><a href="#2-3-2-与github建立联系" class="headerlink" title="2.3.2 与github建立联系"></a>2.3.2 与github建立联系</h4><p>为了能够在本地使用git管理github上的项目，需要进行一些配置，这里介绍SSH的方法。</p>
+<h5 id="2-3-2-1-检查电脑是否已经有SSH-KEYS。"><a href="#2-3-2-1-检查电脑是否已经有SSH-KEYS。" class="headerlink" title="2.3.2.1 检查电脑是否已经有SSH KEYS。"></a>2.3.2.1 检查电脑是否已经有SSH KEYS。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ls -al ~/.ssh</span><br><span class="line"># Lists the files in your .ssh directory, if they exist</span><br></pre></td></tr></table></figure>
+<p>默认情况下，public keys的文件名是以下的格式之一：id_dsa.pub、id_ecdsa.pub、id_ed25519.pub、id_rsa.pub。因此，如果列出的文件有public和private钥匙对（例如id_ras.pub和id_rsa），证明已存在SSH keys。</p>
+<h5 id="2-3-2-2-如果没有SSH-KEY，则生成新的SSH-KEY。"><a href="#2-3-2-2-如果没有SSH-KEY，则生成新的SSH-KEY。" class="headerlink" title="2.3.2.2 如果没有SSH KEY，则生成新的SSH KEY。"></a>2.3.2.2 如果没有SSH KEY，则生成新的SSH KEY。</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</span><br><span class="line"># Creates a new ssh key, using the provided email as a label</span><br></pre></td></tr></table></figure>
+<p>之后一路回车即可。</p>
+<h5 id="2-3-2-3-向SSH-AGENT添加KEY。"><a href="#2-3-2-3-向SSH-AGENT添加KEY。" class="headerlink" title="2.3.2.3 向SSH-AGENT添加KEY。"></a>2.3.2.3 向SSH-AGENT添加KEY。</h5><p>首先确保ssh-agent可运行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># start the ssh-agent in the background</span><br><span class="line">$ ssh-agent -s</span><br></pre></td></tr></table></figure>
+<p>然后添加SSH key：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-add ~/.ssh/id_rsa</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-2-4-在GITHUB添加SSH-KEY。"><a href="#2-3-2-4-在GITHUB添加SSH-KEY。" class="headerlink" title="2.3.2.4 在GITHUB添加SSH KEY。"></a>2.3.2.4 在GITHUB添加SSH KEY。</h5><p>首先，拷贝key：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">clip &lt; ~/.ssh/id_rsa.pub</span><br><span class="line"># Copies the contents of the id_rsa.pub file to your cllipboard</span><br></pre></td></tr></table></figure>
+<p>然后，在GitHub右上方点击头像，选择”Settings”，在右边的”Personal settings”侧边栏选择”SSH Keys”。接着粘贴key，点击”Add key”按钮。最后，测试链接：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br><span class="line"># Attempts to ssh to GitHub</span><br></pre></td></tr></table></figure>
+<p>如果你看到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">The authenticity of host &apos;github.com (207.97.227.239)&apos; can&apos;t be established.</span><br><span class="line">RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.</span><br><span class="line">Are you sure you want to continue connecting (yes/no)?</span><br></pre></td></tr></table></figure>
+<p>就键入：yes。之后将会看到如下信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Hi username! You&apos;ve successfully authenticated, but GitHub does not</span><br><span class="line">provide shell access.</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-3-相关资料"><a href="#2-3-3-相关资料" class="headerlink" title="2.3.3 相关资料"></a>2.3.3 相关资料</h4><ul>
+<li><a href="https://help.github.com/articles/connecting-to-github-with-ssh/" target="_blank" rel="noopener">Generating SSH keys</a></li>
+</ul>
+<h3 id="2-4-Hexo"><a href="#2-4-Hexo" class="headerlink" title="2.4 Hexo"></a>2.4 Hexo</h3><h4 id="2-4-1-安装Hexo"><a href="#2-4-1-安装Hexo" class="headerlink" title="2.4.1 安装Hexo"></a>2.4.1 安装Hexo</h4><p>安装Hexo相当简单。在安装之前，必须检查电脑中是否已经安装下列应用程序：</p>
+<ul>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a></li>
+<li><a href="https://git-scm.com" target="_blank" rel="noopener">Git</a></li>
+</ul>
+<p>如果您的电脑中已经安装上述必备程序，那么恭喜您！接下来只需要使用 npm 即可完成 Hexo 的安装。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-2-使用Hexo建站"><a href="#2-4-2-使用Hexo建站" class="headerlink" title="2.4.2 使用Hexo建站"></a>2.4.2 使用Hexo建站</h4><p>安装完后，在你喜欢的文件夹内（例如D：\Hexo），点击鼠标右键选择Git bash，输入以下指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
+<p>该命令会在目标文件夹内建立网站所需要的所有文件。接下来是安装依赖包：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install</span><br></pre></td></tr></table></figure>
+<p>这样，我们就已经搭建起本地的Hexo博客了。可以先执行以下命令（在对应文件夹下），然后再浏览器输入localhost:4000查看。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<p>这个博客只是本地的，别人是浏览不了的，之后需要部署到GitHub上。</p>
+<h4 id="2-4-3-相关资料"><a href="#2-4-3-相关资料" class="headerlink" title="2.4.3 相关资料"></a>2.4.3 相关资料</h4><ul>
+<li><a href="https://hexo.io/zh-cn/docs/" target="_blank" rel="noopener">Hexo 官方文档</a></li>
+</ul>
+<h3 id="三、一般的搭建方法"><a href="#三、一般的搭建方法" class="headerlink" title="三、一般的搭建方法"></a>三、一般的搭建方法</h3><p>在上面，我们已经配置好了所需的所有东西，也成功地搭建了一个本地Hexo博客。现在，需要使用GitHub Pages搭建一个别人能够访问的Hexo博客了。</p>
+<h4 id="3-1-使用默认theme"><a href="#3-1-使用默认theme" class="headerlink" title="3.1 使用默认theme"></a>3.1 使用默认theme</h4><p>我们继续使用上面的文件夹D:\Hexo（也可以新建一个文件夹重新生成），然后编辑该文件夹下的_config.yml。</p>
+<p>默认生成的_config.yml：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Deployment</span><br><span class="line">## Docs: http://hexo.io/docs/deployment.html</span><br><span class="line">deploy:</span><br><span class="line">  type:</span><br></pre></td></tr></table></figure>
+<p>修改后的_config.yml：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line">  type: git</span><br><span class="line">  repo: 对应仓库的SSH地址（可以在GitHub对应的仓库中复制）</span><br><span class="line">  branch: 分支（User Pages为master，Project Pages为gh-pages）</span><br></pre></td></tr></table></figure>
+<p>为了能够使Hexo部署到GitHub上，需要安装一个插件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<p>然后，执行下列指令即可完成部署：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<p>之后，可以通过在浏览器键入：username.github.io进行浏览，开心吧~</p>
+<h4 id="3-2-其他theme"><a href="#3-2-其他theme" class="headerlink" title="3.2 其他theme"></a>3.2 其他theme</h4><p>如果想要使用其他主题，可以使用git clone将别人的主题拷贝到D:\Hexo\themes下，然后将_config.yml中的theme: landscape改为对应的主题名字。</p>
+<p>下面是next主题的个性化配置教程:</p>
+<ul>
+<li><a href="http://shenzekun.cn/hexo的next主题个性化配置教程.html" target="_blank" rel="noopener">next个性化配置教程</a></li>
+</ul>
+<h3 id="四、-优化部署与管理"><a href="#四、-优化部署与管理" class="headerlink" title="四、 优化部署与管理"></a>四、 优化部署与管理</h3><h4 id="4-1-概述"><a href="#4-1-概述" class="headerlink" title="4.1 概述"></a>4.1 概述</h4><p>Hexo部署到GitHub上的文件，是.md（你的博文）转化之后的.html（静态网页）。因此，当你重装电脑或者想在不同电脑上修改博客时，就不可能了（除非你自己写html o(^▽^)o ）。</p>
+<p>其实，Hexo生成的网站文件中有.gitignore文件，因此它的本意也是想我们将Hexo生成的网站文件存放到GitHub上进行管理的（而不是用U盘或者云备份啦(╬▔皿▔)凸）。这样，不仅解决了上述的问题，还可以通过git的版本控制追踪你的博文的修改过程，是极赞的。</p>
+<p>但是，如果每一个GitHub Pages都需要创建一个额外的仓库来存放Hexo网站文件，我感觉很麻烦（10个项目需要20个仓库(ˉ▽ˉ)…）。</p>
+<p>所以，我利用了分支！！！</p>
+<p>简单地说，每个想建立GitHub Pages的仓库，起码有两个分支，一个用来存放Hexo网站的文件，一个用来发布网站。</p>
+<p>下面以我的博客作为例子详细地讲述。</p>
+<h4 id="4-2-我的博客搭建流程"><a href="#4-2-我的博客搭建流程" class="headerlink" title="4.2 我的博客搭建流程"></a>4.2 我的博客搭建流程</h4><ol>
+<li>创建仓库，liuxc123.github.io；</li>
+<li>创建两个分支：master 与 hexo；</li>
+<li>设置hexo为默认分支（因为我们只需要手动管理这个分支上的Hexo网站文件）；</li>
+<li>使用git clone git@github.com:liuxc123/liuxc123.github.io.git拷贝仓库；</li>
+<li>修改_config.yml中的deploy参数，分支应为master；</li>
+<li>依次执行git add .、git commit -m “…”、git push origin hexo提交网站相关的文件；</li>
+<li>执行hexo generate -d生成网站并部署到GitHub上。</li>
+<li>这样一来，在GitHub上的CrazyMilk.github.io仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。完美( •̀ ω •́ )y！</li>
+</ol>
+<h4 id="4-3-我的博客管理流程"><a href="#4-3-我的博客管理流程" class="headerlink" title="4.3 我的博客管理流程"></a>4.3 我的博客管理流程</h4><h5 id="4-3-1-日常修改"><a href="#4-3-1-日常修改" class="headerlink" title="4.3.1 日常修改"></a>4.3.1 日常修改</h5><p>在本地对博客进行修改（添加新博文、修改样式等等）后，通过下面的流程进行管理：</p>
+<ol>
+<li>依次执行<code>git add .</code>、<code>git commit -m “…”</code>、<code>git push origin hexo</code>指令将改动推送到GitHub（此时当前分支应为hexo）；</li>
+<li>然后才执行<code>hexo generate -d</code>发布网站到master分支上。</li>
+</ol>
+<p>虽然两个过程顺序调转一般不会有问题，不过逻辑上这样的顺序是绝对没问题的（例如突然死机要重装了，悲催….的情况，调转顺序就有问题了）。</p>
+<h5 id="4-3-2-本地资料丢失"><a href="#4-3-2-本地资料丢失" class="headerlink" title="4.3.2 本地资料丢失"></a>4.3.2 本地资料丢失</h5><p>当重装电脑之后，或者想在其他电脑上修改博客，可以使用下列步骤：</p>
+<ol>
+<li>使用<code>git clone git@github.com:liuxc123/liuxc123.github.io.git</code>拷贝仓库（默认分支为hexo）；</li>
+<li>在本地新拷贝的liuxc123.github.io文件夹下通过Git bash依次执行下列指令：<code>npm install hexo</code>、<code>npm install</code>、<code>npm install hexo-deployer-git</code>（记得，不需要<code>hexo init</code>这条指令）。</li>
+</ol>
+<p>###五、结尾<br>ok,现在你就可以轻松的搭建自己的博客了。(ˉ▽ˉ)</p>
+
+      
+    </div>
+    
+    
+    
+
+     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="liuxc 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/15/iOS代码规范/" rel="prev" title="iOS代码规范">
+                iOS代码规范 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="liuxc" />
+            
+              <p class="site-author-name" itemprop="name">liuxc</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liuxc123" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="lxc_work@126.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/mirl-33/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://www.jianshu.com/u/d96162b35a72" target="_blank" title="简书">
+                    
+                      <i class="fa fa-fw fa-globe"></i>简书</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#GitHub-Pages-Hexo搭建博客"><span class="nav-number">1.</span> <span class="nav-text">GitHub Pages + Hexo搭建博客</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、-前言"><span class="nav-number">1.1.</span> <span class="nav-text">一、 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、-必要配置"><span class="nav-number">1.2.</span> <span class="nav-text">二、 必要配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-GitHub-Pages-仓库"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 GitHub Pages 仓库</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-创建对应仓库"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">2.1.1 创建对应仓库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-相关资料"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">2.1.2 相关资料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Git"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 Git</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-安装-Git"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">2.2.1 安装 Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-配置-Git"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">2.2.2 配置 Git</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-相关资料"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">2.2.3 相关资料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Git-与-GitHub"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 Git 与 GitHub</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-git与github的区别"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">2.3.1 git与github的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-与github建立联系"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">2.3.2 与github建立联系</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-1-检查电脑是否已经有SSH-KEYS。"><span class="nav-number">1.2.3.2.1.</span> <span class="nav-text">2.3.2.1 检查电脑是否已经有SSH KEYS。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-2-如果没有SSH-KEY，则生成新的SSH-KEY。"><span class="nav-number">1.2.3.2.2.</span> <span class="nav-text">2.3.2.2 如果没有SSH KEY，则生成新的SSH KEY。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-3-向SSH-AGENT添加KEY。"><span class="nav-number">1.2.3.2.3.</span> <span class="nav-text">2.3.2.3 向SSH-AGENT添加KEY。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-2-4-在GITHUB添加SSH-KEY。"><span class="nav-number">1.2.3.2.4.</span> <span class="nav-text">2.3.2.4 在GITHUB添加SSH KEY。</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-相关资料"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">2.3.3 相关资料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-Hexo"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-安装Hexo"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">2.4.1 安装Hexo</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-使用Hexo建站"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">2.4.2 使用Hexo建站</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-相关资料"><span class="nav-number">1.2.4.3.</span> <span class="nav-text">2.4.3 相关资料</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、一般的搭建方法"><span class="nav-number">1.2.5.</span> <span class="nav-text">三、一般的搭建方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-使用默认theme"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">3.1 使用默认theme</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-其他theme"><span class="nav-number">1.2.5.2.</span> <span class="nav-text">3.2 其他theme</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、-优化部署与管理"><span class="nav-number">1.2.6.</span> <span class="nav-text">四、 优化部署与管理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-概述"><span class="nav-number">1.2.6.1.</span> <span class="nav-text">4.1 概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-我的博客搭建流程"><span class="nav-number">1.2.6.2.</span> <span class="nav-text">4.2 我的博客搭建流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-我的博客管理流程"><span class="nav-number">1.2.6.3.</span> <span class="nav-text">4.3 我的博客管理流程</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-1-日常修改"><span class="nav-number">1.2.6.3.1.</span> <span class="nav-text">4.3.1 日常修改</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-本地资料丢失"><span class="nav-number">1.2.6.3.2.</span> <span class="nav-text">4.3.2 本地资料丢失</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuxc</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站共&#58;</span>
+    
+    <span title="博客全站共">7.9k&nbsp字</span>
+  
+</div>
+
+
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span></span>
+  </div>
+
+
+
+
+
+  
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/03/15/GitHub-Pages-Hexo搭建博客/';
+          this.page.identifier = '2018/03/15/GitHub-Pages-Hexo搭建博客/';
+          this.page.title = 'GitHub Pages + Hexo搭建博客';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.3"></script>
+
+
+</body>
+</html>

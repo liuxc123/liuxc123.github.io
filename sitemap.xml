@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <url>
+    <loc>http://yoursite.com/2018/03/15/iOS%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/</loc>
+    
+    <lastmod>2018-03-16T09:04:40.195Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/03/15/GitHub-Pages-Hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
+    
+    <lastmod>2018-03-16T01:17:28.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/03/16/hello-world/</loc>
+    
+    <lastmod>2018-03-16T01:17:28.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/categories/index.html</loc>
+    
+    <lastmod>2018-03-16T01:17:28.678Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/tags/index.html</loc>
+    
+    <lastmod>2018-03-16T01:17:28.678Z</lastmod>
+    
+  </url>
+  
+</urlset>
