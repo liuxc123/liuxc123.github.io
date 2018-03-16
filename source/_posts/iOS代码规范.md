@@ -675,6 +675,289 @@ NSString *addressStr//地址字符串
 | NSMutableSet | Mset |
 
 ##### 常量
-1. 常量以相关类名作为前缀
+
+-------
+#### 1. 常量以相关类名作为前缀
+
+推荐这样写：
+
+```
+static const NSTimeInterval ZOCSignInViewControllerFadeOutAnimationDuration = 0.4;
+```
+不推荐这样写：
+
+```
+static const NSTimeInterval fadeOutTime = 0.4;
+```
+#### 2. 建议使用类型常量，不建议使用#define预处理命令
+
+首先比较一下这两种声明常量的区别：
+
+* 预处理命令：简单的文本替换，不包括类型信息，并且可被任意修改。
+* 类型常量：包括类型信息，并且可以设置其使用范围，而且不可被修改。
+
+使用预处理虽然能达到替换文本的目的，但是本身还是有局限性的：
+
+* 不具备类型信息。
+* 可以被任意修改。
+
+#### 3. 对外公开某个常量：
+
+如果我们需要发送通知，那么就需要在不同的地方拿到通知的“频道”字符串（通知的名称），那么显然这个字符串是不能被轻易更改，而且可以在不同的地方获取。这个时候就需要定义一个外界可见的字符串常量。
+
+推荐这样写：
+
+```
+//头文件
+extern NSString *const ZOCCacheControllerDidClearCacheNotification;
+```
+
+```
+//实现文件
+static NSString * const ZOCCacheControllerDidClearCacheNotification = @"ZOCCacheControllerDidClearCacheNotification";
+static const CGFloat ZOCImageThumbnailHeight = 50.0f;
+```
+
+不推荐这样写：
+
+```
+#define CompanyName @"Apple Inc." 
+#define magicNumber 42
+```
+### 宏
+
+-------
+#### 1. 宏、常量名都要使用大写字母，用下划线‘_’分割单词。
+
+```
+#define URL_GAIN_QUOTE_LIST @"/v1/quote/list"
+#define URL_UPDATE_QUOTE_LIST @"/v1/quote/update"
+#define URL_LOGIN  @"/v1/user/login”
+```
+
+#### 2. 宏定义中如果包含表达式或变量，表达式和变量必须用小括号括起来。
+
+```
+#define MY_MIN(A, B)  ((A)>(B)?(B):(A))
+```
+
+### CGRect函数
+
+-------
+其实iOS内部已经提供了相应的获取CGRect各个部分的函数了，它们的可读性比较高，而且简短，推荐使用：
+
+推荐这样写：
+
+```
+CGRect frame = self.view.frame; 
+CGFloat x = CGRectGetMinX(frame); 
+CGFloat y = CGRectGetMinY(frame); 
+CGFloat width = CGRectGetWidth(frame); 
+CGFloat height = CGRectGetHeight(frame); 
+CGRect frame = CGRectMake(0.0, 0.0, width, height);
+```
+而不是
+
+```
+CGRect frame = self.view.frame;  
+CGFloat x = frame.origin.x;  
+CGFloat y = frame.origin.y;  
+CGFloat width = frame.size.width;  
+CGFloat height = frame.size.height;  
+CGRect frame = (CGRect){ .origin = CGPointZero, .size = frame.size };
+```
+### 范型
+
+-------
+建议在定义NSArray和NSDictionary时使用泛型，可以保证程序的安全性：
+
+```
+NSArray<NSString *> *testArr = [NSArray arrayWithObjects:@"Hello", @"world", nil];
+NSDictionary<NSString *, NSNumber *> *dic = @{@"key":@(1), @"age":@(10)};
+```
+### Block
+
+为常用的Block类型创建typedef
+
+如果我们需要重复创建某种block（相同参数，返回值）的变量，我们就可以通过typedef来给某一种块定义属于它自己的新类型
+
+例如：
+
+```
+int (^variableName)(BOOL flag, int value) =^(BOOL flag, int value){
+     // Implementation
+     return someInt;
+}
+```
+
+这个Block有一个bool参数和一个int参数，并返回int类型。我们可以给它定义类型：
+
+```
+int(^EOCSomeBlock)(BOOL flag, int value);
+//再次定义的时候，就可以通过简单的赋值来实现：
+EOCSomeBlock block = ^(BOOL flag, int value){
+// Implementation
+};
+
+```
+定义作为参数的Block：
+
+```
+(void)startWithCompletionHandler: (void(^)(NSData data, NSError error))completion;
+```
+这里的Block有一个NSData参数，一个NSError参数并没有返回值
+
+```
+typedef void(^EOCCompletionHandler)(NSData data, NSError error);
+```
+
+```
+(void)startWithCompletionHandler:(EOCCompletionHandler)completion;”
+```
+通过typedef定义Block签名的好处是:如果要某种块增加参数，那么只修改定义签名的那行代码即可。
+
+### 字面量语法
+---
+
+尽量使用字面量值来创建 NSString , NSDictionary , NSArray , NSNumber 这些不可变对象：
+
+推荐这样写：
+
+```
+NSArray *names = @[@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul"];
+NSDictionary *productManagers = @{@"iPhone" : @"Kate", @"iPad" : @"Kamal", @"Mobile Web" : @"Bill"}; 
+NSNumber *shouldUseLiterals = @YES;NSNumber *buildingZIPCode = @10018;
+```
+
+```
+NSArray *names = [NSArray arrayWithObjects:@"Brian", @"Matt", @"Chris", @"Alex", @"Steve", @"Paul", nil];
+NSDictionary *productManagers = [NSDictionary dictionaryWithObjectsAndKeys: @"Kate", @"iPhone", @"Kamal", @"iPad", @"Bill" ];
+NSNumber *shouldUseLiterals = [NSNumber numberWithBool:YES];NSNumber *buildingZIPCode = [NSNumber numberWithInteger:10018];
+```
+### 属性
+
+-------
+#### 1. 属性的命名使用小驼峰
+
+推荐这样写：
+
+```
+@property (nonatomic, readwrite, strong) UIButton *confirmButton;
+```
+#### 2. 属性的关键字推荐按照 原子性，读写，内存管理的顺序排列
+
+推荐这样写：
+
+```
+@property (nonatomic, readwrite, copy) NSString *name;
+@property (nonatomic, readonly, copy) NSString *gender;
+@property (nonatomic, readwrite, strong) UIView *headerView;
+
+```
+3. Block属性应该使用copy关键字
+
+推荐这样写：
+
+```
+typedef void (^ErrorCodeBlock) (id errorCode,NSString *message);
+@property (nonatomic, readwrite, copy) ErrorCodeBlock errorBlock;//将block拷贝到堆中
+```
+#### 4. 形容词性的BOOL属性的getter应该加上is前缀
+推荐这样写：
+
+```
+@property (assign, getter=isEditable) BOOL editable;
+```
+#### 5. 使用getter方法做懒加载
+实例化一个对象是需要耗费资源的，如果这个对象里的某个属性的实例化要调用很多配置和计算，就需要懒加载它，在使用它的前一刻对它进行实例化：
+
+```
+- (NSDateFormatter *)dateFormatter {
+    if (!_dateFormatter) {
+           _dateFormatter = [[NSDateFormatter alloc] init];
+           NSLocale *enUSPOSIXLocale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
+           [_dateFormatter setLocale:enUSPOSIXLocale];
+           [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS"];
+    } 
+    return _dateFormatter;
+}
+```
+但是也有对这种做法的争议：getter方法可能会产生某些副作用，例如如果它修改了全局变量，可能会产生难以排查的错误。
+#### 6. 除了init和dealloc方法，建议都使用点语法访问属性
+使用点语法的好处：
+**setter：**
+1. setter会遵守内存管理语义(strong, copy, weak)。
+2. 通过在内部设置断点，有助于调试bug。
+3. 可以过滤一些外部传入的值。
+4. 捕捉KVO通知。
+getter：
+
+1. 允许子类化。
+2. 通过在内部设置断点，有助于调试bug。
+3. 实现懒加载（lazy initialization）。
+
+> 注意：
+> 1. 懒加载的属性，必须通过点语法来读取数据。因为懒加载是通过重写getter方法来初始化实例变量的，如果不通过属性来读取该实例变量，那么这个实例变量就永远不会被初始化。
+> 2. 在init和dealloc方法里面使用点语法的后果是：因为没有绕过setter和getter，在setter和getter里面可能会有很多其他的操作。而且如果它的子类重载了它的setter和getter方法，那么就可能导致该子类调用其他的方法。
+
+#### 7. 不要滥用点语法，要区分好方法调用和属性访问
+推荐这样写：
+
+```
+view.backgroundColor = [UIColor orangeColor]; 
+[UIApplication sharedApplication].delegate;
+```
+
+不推荐这样写：
+
+```
+[view setBackgroundColor:[UIColor orangeColor]]; 
+UIApplication.sharedApplication.delegate;
+```
+#### 8. 尽量使用不可变对象
+建议尽量把对外公布出来的属性设置为只读，在实现文件内部设为读写。具体做法是：
+
+* 在头文件中，设置对象属性为
+    * 在实现文件中设置为```readwrite```。
+    这样一来，在外部就只能读取该数据，而不能修改它，使得这个类的实例所持有的数据更加安全。而且，对于集合类的对象，更应该仔细考虑是否可以将其设为可变的。
+    如果在公开部分只能设置其为只读属性，那么就在非公开部分存储一个可变型。所以当在外部获取这个属性时，获取的只是内部可变型的一个不可变版本,
+    
+例如：
+    
+在公共API中：
+    
+```
+@interface EOCPerson : NSObject
+
+@property (nonatomic, copy, readonly) NSString firstName;
+@property (nonatomic, copy, readonly) NSString lastName;
+@property (nonatomic, strong, readonly) NSSet *friends //向外公开的不可变集合
+
+(id)initWithFirstName:(NSString)firstName andLastName:(NSString)lastName;
+(void)addFriend:(EOCPerson*)person;
+(void)removeFriend:(EOCPerson*)person;
+@end
+```
+
+>在这里，我们将friends属性设置为不可变的set。然后，提供了来增加和删除这个set里的元素的公共接口。
+
+在实现文件里：
+
+```
+@interface EOCPerson ()
+
+@property (nonatomic, copy, readwrite) NSString firstName;
+@property (nonatomic, copy, readwrite) NSString lastName;
+
+@end
+
+@implementation EOCPerson {
+NSMutableSet *_internalFriends; //实现文件里的可变集合
+}
+
+- (NSSet*)friends {
+    return [_internalFriends copy]; //get方法返回的永远是可变set的不可变型
+}
+```
 
 
