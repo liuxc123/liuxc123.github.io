@@ -960,4 +960,798 @@ NSMutableSet *_internalFriends; //实现文件里的可变集合
 }
 ```
 
+##### 2. 方法实现时，如果参数过长，则令每个参数占用一行，以冒号对齐。
+
+```
+- (void)doSomethingWith:(NSString *)theFoo
+                   rect:(CGRect)theRect
+               interval:(CGFloat)theInterval
+{
+   //Implementation
+}
+```
+
+##### 3. 私有方法应该在实现文件中申明。
+
+```
+@interface ViewController ()
+- (void)basicConfiguration;
+@end
+@implementation ViewController
+- (void)basicConfiguration
+{
+   //Do some basic configuration
+}
+@end
+```
+
+
+##### 4. 方法名用小写字母开头的单词组合而成
+
+```
+- (NSString *)descriptionWithLocale:(id)locale;
+```
+
+##### 5. 方法名前缀
+* 刷新视图的方法名要以refresh为首。
+* 更新数据的方法名要以update为首。
+
+推荐这样写：
+
+```
+- (void)refreshHeaderViewWithCount:(NSUInteger)count;
+- (void)updateDataSourceWithViewModel:(ViewModel*)viewModel;
+```
+
+### 面向协议编程
+
+-------
+如果某些功能（方法）具备可复用性，我们就需要将它们抽取出来放入一个抽象接口文件中（在iOS中，抽象接口即协议），让不同类型的对象遵循这个协议，从而拥有相同的功能。
+
+因为协议是不依赖于某个对象的，所以通过协议，我们可以解开两个对象之间的耦合。如何理解呢？我们来看一下下面这个例子：
+
+现在有一个需求：在一个`UITableViewController`里面拉取feed并展示出来。
+
+#### 方案一：
+定义一个拉取feed的类ZOCFeedParser，这个类有一些代理方法实现feed相关功能：
+
+```
+@protocol ZOCFeedParserDelegate <NSObject>
+@optional
+- (void)feedParserDidStart:(ZOCFeedParser *)parser;
+- (void)feedParser:(ZOCFeedParser *)parser didParseFeedInfo:(ZOCFeedInfoDTO *)info; 
+- (void)feedParser:(ZOCFeedParser *)parser didParseFeedItem:(ZOCFeedItemDTO *)item; 
+- (void)feedParserDidFinish:(ZOCFeedParser *)parser;
+- (void)feedParser:(ZOCFeedParser *)parser didFailWithError:(NSError *)error;@end 
+@interface ZOCFeedParser : NSObject
+@property (nonatomic, weak) id <ZOCFeedParserDelegate> delegate; 
+@property (nonatomic, strong) NSURL *url; 
+- (id)initWithURL:(NSURL *)url; 
+- (BOOL)start; 
+- (void)stop; 
+@end
+```
+然后在ZOCTableViewController里面传入ZOCFeedParser，并遵循其代理方法，实现feed的拉取功能。
+
+
+```
+@interface ZOCTableViewController : UITableViewController<ZOCFeedParserDelegate>
+- (instancetype)initWithFeedParser:(ZOCFeedParser *)feedParser; 
+@end
+```
+然后在ZOCTableViewController里面传入ZOCFeedParser，并遵循其代理方法，实现feed的拉取功能。
+
+```
+@interface ZOCTableViewController : UITableViewController<ZOCFeedParserDelegate>
+- (instancetype)initWithFeedParser:(ZOCFeedParser *)feedParser; 
+@end
+```
+
+具体应用：
+
+```
+NSURL *feedURL = [NSURL URLWithString:@"http://bbc.co.uk/feed.rss"]; 
+ZOCFeedParser *feedParser = [[ZOCFeedParser alloc] initWithURL:feedURL]; 
+ZOCTableViewController *tableViewController = [[ZOCTableViewController alloc] initWithFeedParser:feedParser]; 
+feedParser.delegate = tableViewController;
+```
+OK，现在我们实现了需求：在`ZOCTableViewController`里面存放了一个`ZOCFeedParser`对象来处理feed的拉取功能。
+于是我们重新审视一下这个需求：其实我们实际上只需要`ZOCTableViewController`拉取feed就可以了，而具体是由哪个对象来拉取，`ZOCTableViewController`并不需要关心。
+
+也就是说，我们需要提供给`ZOCTableViewController`的是一个更范型的对象，这个对象具备了拉取feed的功能就好了，而不应该仅仅局限于某个具体的对象（`ZOCFeedParser`）。所以，刚才的设计需要重新做一次修改：
+
+#### 方案二：
+首先需要在一个接口文件`ZOCFeedParserProtocol.h`里面定义抽象的，具有拉取feed功能的协议：
+
+```
+@protocol ZOCFeedParserDelegate <NSObject>
+@optional
+- (void)feedParserDidStart:(id<ZOCFeedParserProtocol>)parser;
+- (void)feedParser:(id<ZOCFeedParserProtocol>)parser didParseFeedInfo:(ZOCFeedInfoDTO *)info; 
+- (void)feedParser:(id<ZOCFeedParserProtocol>)parser didParseFeedItem:(ZOCFeedItemDTO *)item; 
+- (void)feedParserDidFinish:(id<ZOCFeedParserProtocol>)parser;
+- (void)feedParser:(id<ZOCFeedParserProtocol>)parser didFailWithError:(NSError *)error;@end 
+@protocol ZOCFeedParserProtocol <NSObject>
+@property (nonatomic, weak) id <ZOCFeedParserDelegate> delegate; 
+@property (nonatomic, strong) NSURL *url;
+- (BOOL)start;
+- (void)stop;
+@end
+```
+而原来的`ZOCFeedParser`仅仅是需要遵循上面这个协议就具备了拉取feed的功能
+
+```
+@interface ZOCFeedParser : NSObject <ZOCFeedParserProtocol> 
+- (id)initWithURL:(NSURL *)url;//仅仅需要通过传入url即可，其他事情都交给ZOCFeedParserProtocol@end
+```
+而且，`ZOCTableViewController`也不直接依赖于`ZOCFeedParser`对象，我们只需要传给它一个遵循`<ZOCFeedParserProtocol>`的对象即可。
+
+```
+@interface ZOCTableViewController : UITableViewController <ZOCFeedParserDelegate>
+- (instancetype)initWithFeedParser:(id<ZOCFeedParserProtocol>)feedParser;
+@end
+```
+这样一来，`ZOCTableViewController`和`wController`和`之间就没有直接的关系了。以后，如果我们想：
+
+* 给这个feed拉取器增加新的功能：仅需要修改`ZOCFeedParserProtocol.h`文件。
+* 更换一个feed拉取器实例：创建一个新类型来遵循`ZOCFeedParserProtocol.h`即可。
+
+### iOS 中委托的设计
+
+-------
+#### 1. 要区分好代理和数据源的区别
+在iOS开发中的委托模式包含了delegate（代理）和datasource（数据源）。虽然二者同属于委托模式，但是这两者是有区别的。这个区别就是二者的信息流方向是不同的：
+
+* delegate ：事件发生的时候，委托者需要通知代理。（信息流从委托者到代理）
+* datasource：委托者需要从数据源拉取数据。（信息流从数据源到委托者）
+
+然而包括苹果也没有做好榜样，将它们彻底的区分开。就拿UITableView来说，在它的delegate方法中有一个方法：
+
+```
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+```
+
+这个方法正确地体现了代理的作用：委托者（tableview）告诉代理（控制器）“我的某个cell被点击了”。但是，UITableViewDelegate的方法列表里还有这个方法：
+
+```
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+```
+
+该方法的作用是 由控制器来告诉tabievlew的行高，也就是说，它的信息流是从控制器（数据源）到委托者（tableview）的。准确来讲，它应该是一个数据源方法，而不是代理方法。
+
+在UITableViewDataSource中，就有标准的数据源方法：
+
+```
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView;
+```
+这个方法的作用就是让tableview向控制器拉取一个section数量的数据。
+
+所以，在我们设计一个视图控件的代理和数据源时，一定要区分好二者的区别，合理地划分哪些方法属于代理方法，哪些方法属于数据源方法。
+
+#### 2. 代理方法的第一个参数必须为委托者
+
+代理方法必须以委托者作为第一个参数（参考UITableViewDelegate）的方法。其目的是为了区分不同委托着的实例。因为同一个控制器是可以作为多个tableview的代理的。若要区分到底是哪个tableview的cell被点击了，就需要在
+
+```
+(void)tableView:(UITableView )tableView didSelectRowAtIndexPath:(NSIndexPath )indexPath``方法中做个区分。
+```
+##### 向代理发送消息时需要判断其是否实现该方法
+
+最后，在委托着向代理发送消息的时候，需要判断委托着是否实现了这个代理方法:
+
+```
+if ([self.delegate respondsToSelector:@selector(signUpViewControllerDidPressSignUpButton:)]) { 
+ [self.delegate signUpViewControllerDidPressSignUpButton:self]; 
+}
+```
+#### 3. 遵循代理过多的时候，换行对齐显示
+
+```
+@interface ShopViewController () <UIGestureRecognizerDelegate,
+                                  HXSClickEventDelegate,
+                                  UITableViewDelegate,
+                                  UITableViewDataSource>
+```
+#### 4. 代理的方法需要明确必须执行和可不执行
+代理方法在默认情况下都是必须执行的，然而在设计一组代理方法的时候，有些方法可以不是必须执行（是因为存在默认配置），这些方法就需要使用@optional关键字来修饰：
+
+```
+@protocol ZOCServiceDelegate <NSObject>@optional- (void)generalService:(ZOCGeneralService *)service didRetrieveEntries:(NSArray *)entries; 
+@end
+```
+### 类
+
+-------
+#### 1. 类的名称应该以三个大写字母为前缀；创建子类的时候，应该把代表子类特点的部分放在前缀和父类名的中间
+
+推荐这样写：
+
+```
+//父类
+ZOCSalesListViewController
+//子类
+ZOCDaySalesListViewController
+ZOCMonthSalesListViewController
+```
+
+#### 2. initializer && dealloc
+推荐：
+
+* 将 dealloc 方法放在实现文件的最前面
+* 将init方法放在dealloc方法后面。如果有多个初始化方法，应该将指定初始化方法放在最前面，其他初始化方法放在其后。
+
+##### 2.1 dealloc方法里面应该直接访问实例变量，不应该用点语法访问
+##### 2.2 init方法的写法：
+* init方法返回类型必须是instancetype，不能是id。
+* 必须先实现[super init]。
+
+```
+- (instancetype)init { 
+    self = [super init]; // call the designated initializer 
+    if (self) { 
+        // Custom initialization 
+    } 
+    return self; 
+}
+```
+##### 2.3 指定初始化方法
+指定初始化方法(designated initializer)是提供所有的（最多的）参数的初始化方法，间接初始化方法(secondary initializer)有一个或部分参数的初始化方法。
+
+注意事项1：间接初始化方法必须调用指定初始化方法。
+
+```
+@implementation ZOCEvent 
+//指定初始化方法
+- (instancetype)initWithTitle:(NSString *)title date:(NSDate *)date 
+location:(CLLocation *)location
+{ 
+    self = [super init]; 
+      if (self) {
+         _title = title; 
+         _date = date; 
+         _location = location; 
+      } 
+    return self; 
+} 
+//间接初始化方法
+-  (instancetype)initWithTitle:(NSString *)title date:(NSDate *)date
+{ 
+    return [self initWithTitle:title date:date location:nil];
+}
+//间接初始化方法
+-  (instancetype)initWithTitle:(NSString *)title 
+{ 
+    return [self initWithTitle:title date:[NSDate date] location:nil];
+}
+ @end
+```
+
+注意事项2：如果直接父类有指定初始化方法，则必须调用其指定初始化方法
+
+```
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]; 
+    if (self) {
+    }
+    return self; 
+}
+```
+
+注意事项3：如果想在当前类自定义一个新的全能初始化方法，则需要如下几个步骤
+
+1. 定义新的指定初始化方法，并确保调用了直接父类的初始化方法。
+2. 重载直接父类的初始化方法，在内部调用新定义的指定初始化方法。
+3. 为新的指定初始化方法写文档。
+
+看一个标准的例子：
+
+```
+@implementation ZOCNewsViewController
+//新的指定初始化方法
+- (id)initWithNews:(ZOCNews *)news {
+    self = [super initWithNibName:nil bundle:nil]; 
+    if (self) {
+        _news = news;
+    }
+    return self;
+} 
+// 重载父类的初始化方法
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+    return [self initWithNews:nil]; 
+}
+@end
+```
+
+在这里，重载父类的初始化方法并在内部调用新定义的指定初始化方法的原因是你不能确定调用者调用的就一定是你定义的这个新的指定初始化方法，而不是原来从父类继承来的指定初始化方法。
+
+假设你没有重载父类的指定初始化方法，而调用者却恰恰调用了父类的初始化方法。那么调用者可能永远都调用不到你自己定义的新指定初始化方法了。
+
+而如果你成功定义了一个新的指定初始化方法并能保证调用者一定能调用它，你最好要在文档中明确写出哪一个才是你定义的新初始化方法。或者你也可以使用编译器指令`__attribute__((objc_designated_initializer))`来标记它。
+
+#### 3. 所有返回类对象和实例对象的方法都应该使用instancetype
+
+将instancetype关键字作为返回值的时候，可以让编译器进行类型检查，同时适用于子类的检查，这样就保证了返回类型的正确性（一定为当前的类对象或实例对象）
+
+推荐这样写：
+
+```
+@interface ZOCPerson
++ (instancetype)personWithName:(NSString *)name; 
+@end
+```
+不推荐这样写：
+
+```
+@interface ZOCPerson
++ (id)personWithName:(NSString *)name; 
+@end
+```
+
+#### 4. 在类的头文件中尽量少引用其他头文件
+
+有时，类A需要将类B的实例变量作为它公共API的属性。这个时候，我们不应该引入类B的头文件，而应该使用向前声明（forward declaring）使用class关键字，并且在A的实现文件引用B的头文件。
+
+```
+// EOCPerson.h
+#import <Foundation/Foundation.h>
+@class EOCEmployer;
+@interface EOCPerson : NSObject
+@property (nonatomic, copy) NSString *firstName;
+@property (nonatomic, copy) NSString *lastName;
+@property (nonatomic, strong) EOCEmployer *employer;//将EOCEmployer作为属性
+@end
+// EOCPerson.m
+#import "EOCEmployer.h"
+```
+
+这样做有什么优点呢：
+
+> * 不在A的头文件中引入B的头文件，就不会一并引入B的全部内容，这样就减少了编译时间。
+> * 可以避免循环引用：因为如果两个类在自己的头文件中都引入了对方的头文件，那么就会导致其中一个类无法被正确编译。
+
+但是个别的时候，必须在头文件中引入其他类的头文件:    
+    
+> 主要有两种情况：
+> 1. 该类继承于某个类，则应该引入父类的头文件。
+> 2. 该类遵从某个协议，则应该引入该协议的头文件。而且最好将协议单独放在一个头文件中。
+
+#### 5. 类的布局
+
+```
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+#pragma mark - Life Cycle Methods
+- (instancetype)init
+- (void)dealloc
+- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillDisappear:(BOOL)animated
+- (void)viewDidDisappear:(BOOL)animated
+#pragma mark - Override Methods
+#pragma mark - Intial Methods
+#pragma mark - Network Methods
+#pragma mark - Target Methods
+#pragma mark - Public Methods
+#pragma mark - Private Methods
+#pragma mark - UITableViewDataSource  
+#pragma mark - UITableViewDelegate  
+#pragma mark - Lazy Loads
+#pragma mark - NSCopying  
+#pragma mark - NSObject  Methods
+```
+
+### 分类
+
+-------
+#### 1. 分类添加的方法需要添加前缀和下划线
+
+推荐这样写：
+
+```
+@interface NSDate (ZOCTimeExtensions)
+ - (NSString *)zoc_timeAgoShort;
+@end
+```
+
+不推荐这样写：
+
+```
+@interface NSDate (ZOCTimeExtensions)
+ - (NSString *)zoc_timeAgoShort;
+@end
+```
+
+#### 2. 把类的实现代码分散到便于管理的多个分类中
+
+一个类可能会有很多公共方法，而且这些方法往往可以用某种特有的逻辑来分组。我们可以利用Objecctive-C的分类机制，将类的这些方法按一定的逻辑划入几个分区中。
+
+举个🌰：
+
+先看一个没有使用无分类的类：
+
+```
+#import <Foundation/Foundation.h>
+@interface EOCPerson : NSObject
+@property (nonatomic, copy, readonly) NSString *firstName;
+@property (nonatomic, copy, readonly) NSString *lastName;
+@property (nonatomic, strong, readonly) NSArray *friends;
+- (id)initWithFirstName:(NSString*)firstName andLastName:(NSString*)lastName;
+/* Friendship methods */
+- (void)addFriend:(EOCPerson*)person;
+- (void)removeFriend:(EOCPerson*)person;
+- (BOOL)isFriendsWith:(EOCPerson*)person;
+/* Work methods */
+- (void)performDaysWork;
+- (void)takeVacationFromWork;
+/* Play methods */
+- (void)goToTheCinema;
+- (void)goToSportsGame;
+@end
+```
+
+分类之后：
+
+```
+#import <Foundation/Foundation.h>
+@interface EOCPerson : NSObject
+@property (nonatomic, copy, readonly) NSString *firstName;
+@property (nonatomic, copy, readonly) NSString *lastName;
+@property (nonatomic, strong, readonly) NSArray *friends;
+- (id)initWithFirstName:(NSString*)firstName
+andLastName:(NSString*)lastName;
+@end
+@interface EOCPerson (Friendship)
+- (void)addFriend:(EOCPerson*)person;
+- (void)removeFriend:(EOCPerson*)person;
+- (BOOL)isFriendsWith:(EOCPerson*)person;
+@end
+@interface EOCPerson (Work)
+- (void)performDaysWork;
+- (void)takeVacationFromWork;
+@end
+@interface EOCPerson (Play)
+- (void)goToTheCinema;
+- (void)goToSportsGame;
+@end
+```
+
+其中，FriendShip分类的实现代码可以这么写：
+
+```
+
+// EOCPerson+Friendship.h
+#import "EOCPerson.h"
+@interface EOCPerson (Friendship)
+- (void)addFriend:(EOCPerson*)person;
+- (void)removeFriend:(EOCPerson*)person;
+- (BOOL)isFriendsWith:(EOCPerson*)person;
+@end
+// EOCPerson+Friendship.m
+#import "EOCPerson+Friendship.h"
+@implementation EOCPerson (Friendship)
+- (void)addFriend:(EOCPerson*)person {
+ /* ... */
+}
+- (void)removeFriend:(EOCPerson*)person {
+ /* ... */
+}
+- (BOOL)isFriendsWith:(EOCPerson*)person {
+ /* ... */
+}
+@end
+```
+
+> 注意：在新建分类文件时，一定要引入被分类的类文件。
+
+通过分类机制，可以把类代码分成很多个易于管理的功能区，同时也便于调试。因为分类的方法名称会包含分类的名称，可以马上看到该方法属于哪个分类中。
+
+利用这一点，我们可以创建名为Private的分类，将所有私有方法都放在该类里。这样一来，我们就可以根据private一词的出现位置来判断调用的合理性，这也是一种编写“自我描述式代码（self-documenting）”的办法。
+
+### 单例
+
+-------
+#### 1. 单例不能作为容器对象来使用
+
+单例对象不应该暴露出任何属性，也就是说它不能作为让外部存放对象的容器。它应该是一个处理某些特定任务的工具，比如在iOS中的GPS和加速度传感器。我们只能从他们那里得到一些特定的数据。
+
+#### 2. 使用dispatch_once来生成单例
+
+推荐这样写：
+
+```
++ (instancetype)sharedInstance { 
+ static id sharedInstance = nil; 
+ static dispatch_once_t onceToken = 0;
+       dispatch_once(&onceToken, ^{ 
+  sharedInstance = [[self alloc] init];
+  }); 
+ return sharedInstance; 
+}
+```
+
+不推荐这样写：
+
+```
++ (instancetype)sharedInstance { 
+ static id sharedInstance; 
+ @synchronized(self) { 
+ if (sharedInstance == nil) {  sharedInstance = [[MyClass alloc] init]; 
+ } } 
+ return sharedInstance; 
+}
+```
+
+### 相等性的判断
+
+-------
+判断两个person类是否相等的合理做法：
+
+```
+-  (BOOL)isEqual:(id)object {
+     if (self == object) {  return YES; //判断内存地址
+ } 
+  if (![object isKindOfClass:[ZOCPerson class]]) { 
+     return NO; //是否为当前类或派生类 } 
+ return [self isEqualToPerson:(ZOCPerson *)object]; 
+ 
+}
+//自定义的判断相等性的方法
+-  (BOOL)isEqualToPerson:(Person *)person { 
+        if (!person) {  return NO;
+  } BOOL namesMatch = (!self.name && !person.name) || [self.name isEqualToString:person.name]; BOOL birthdaysMatch = (!self.birthday && !person.birthday) || [self.birthday isEqualToDate:person.birthday]; return haveEqualNames && haveEqualBirthdays; 
+}
+```
+
+### 方法文档
+
+-------
+
+一个函数(方法)必须有一个字符串文档来解释，除非它：
+
+* 非公开，私有函数。
+* 很短。
+* 显而易见。 
+
+而其余的，包括公开接口，重要的方法，分类，以及协议，都应该伴随文档（注释）：
+
+* 以/开始
+* 第二行识总结性的语句
+* 第三行永远是空行
+* 在与第二行开头对齐的位置写剩下的注释。
+
+建议这样写：
+
+```
+/This comment serves to demonstrate the format of a doc string.
+Note that the summary line is always at most one line long, and after the opening block comment,
+and each line of text is preceded by a single space.
+*/
+```
+
+看一个指定初始化方法的注释：
+
+```
+/ 
+  *  Designated initializer. *
+  *  @param store The store for CRUD operations.
+  *  @param searchService The search service used to query the store. 
+  *  @return A ZOCCRUDOperationsStore object.
+  */ 
+- (instancetype)initWithOperationsStore:(id<ZOCGenericStoreProtocol>)store searchService:(id<ZOCGenericSearchServiceProtocol>)searchService;
+```
+
+### 多用队列，少用同步锁来避免资源抢夺
+
+-------
+多个线程执行同一份代码时，很可能会造成数据不同步。建议使用GCD来为代码加锁的方式解决这个问题。
+
+#### 方案一：使用串行同步队列来将读写操作都安排到同一个队列里：
+
+```
+_syncQueue = dispatch_queue_create("com.effectiveobjectivec.syncQueue", NULL);
+//读取字符串
+- (NSString*)someString {
+         __block NSString *localSomeString;
+         dispatch_sync(_syncQueue, ^{
+            localSomeString = _someString;
+        });
+         return localSomeString;
+}
+//设置字符串
+- (void)setSomeString:(NSString*)someString {
+     dispatch_sync(_syncQueue, ^{
+        _someString = someString;
+    });
+}
+```
+
+这样一来，读写操作都在串行队列进行，就不容易出错。
+
+但是，还有一种方法可以让性能更高：
+
+#### 方案二：将写操作放入栅栏快中，让他们单独执行；将读取操作并发执行。
+
+```
+_syncQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+//读取字符串
+- (NSString*)someString {
+     __block NSString *localSomeString;
+     dispatch_sync(_syncQueue, ^{
+        localSomeString = _someString;
+    });
+     return localSomeString;
+}
+```
+
+```
+//设置字符串
+- (void)setSomeString:(NSString*)someString {
+     dispatch_barrier_async(_syncQueue, ^{
+        _someString = someString;
+    });
+}
+```
+显然，数据的正确性主要取决于写入操作，那么只要保证写入时，线程是安全的，那么即便读取操作是并发的，也可以保证数据是同步的。
+这里的`dispatch_barrier_async`方法使得操作放在了同步队列里“有序进行”，保证了写入操作的任务是在串行队列里。
+
+### 实现description方法打印自定义对象信息
+
+-------
+在打印我们自己定义的类的实例对象时，在控制台输出的结果往往是这样的：`object = <EOCPerson: 0x7fd9a1600600>`
+
+这里只包含了类名和内存地址，它的信息显然是不具体的,远达不到调试的要求。
+
+但是！如果在我们自己定义的类覆写description方法，我们就可以在打印这个类的实例时输出我们想要的信息。
+
+例如：
+
+```
+- (NSString*)description {
+     return [NSString stringWithFormat:@"<%@: %p, %@ %@>", [self class], self, firstName, lastName];
+}
+```
+
+在这里，显示了内存地址，还有该类的所有属性。
+
+而且，如果我们将这些属性值放在字典里打印，则更具有可读性：
+
+```
+- (NSString*)description {
+     return [NSString stringWithFormat:@"<%@: %p, %@>",[self class],self,
+   
+    @{    @"title":_title,
+       @"latitude":@(_latitude),
+      @"longitude":@(_longitude)}
+    ];
+}
+```
+
+输出结果：
+
+```
+location = <EOCLocation: 0x7f98f2e01d20, {
+    latitude = "51.506";
+   longitude = 0;
+       title = London;
+}>
+```
+
+我们可以看到，通过重写`description`方法可以让我们更加了解对象的情况，便于后期的调试，节省开发时间。
+
+### NSArray& NSMutableArray
+
+-------
+#### 1. addObject之前要非空判断。
+#### 2. 取下标的时候要判断是否越界。
+#### 3. 取第一个元素或最后一个元素的时候使用firtstObject和lastObject
+
+### NSCache
+
+-------
+#### 1. 构建缓存时选用NSCache 而非NSDictionary
+
+如果我们缓存使用得当，那么应用程序的响应速度就会提高。只有那种“重新计算起来很费事的数据，才值得放入缓存”，比如那些需要从网络获取或从磁盘读取的数据。
+
+在构建缓存的时候很多人习惯用NSDictionary或者NSMutableDictionary，但是作者建议大家使用NSCache，它作为管理缓存的类，有很多特点要优于字典，因为它本来就是为了管理缓存而设计的。
+
+#### 2. NSCache优于NSDictionary的几点：
+
+* 当系统资源将要耗尽时，NSCache具备自动删减缓冲的功能。并且还会先删减“最久未使用”的对象。
+* NSCache不拷贝键，而是保留键。因为并不是所有的键都遵从拷贝协议（字典的键是必须要支持拷贝协议的，有局限性）。
+* NSCache是线程安全的：不编写加锁代码的前提下，多个线程可以同时访问NSCache。
+
+### NSNotification
+
+-------
+#### 1. 通知的名称
+
+建议将通知的名字作为常量，保存在一个专门的类中：
+
+```
+// Const.h
+extern NSString * const ZOCFooDidBecomeBarNotification
+// Const.m
+NSString * const ZOCFooDidBecomeBarNotification = @"ZOCFooDidBecomeBarNotification";
+```
+#### 2. 通知的移除
+
+通知必须要在对象销毁之前移除掉。
+
+### 其他
+
+-------
+#### 1. Xcode工程文件的物理路径要和逻辑路径保持一致。
+#### 2. 忽略没有使用变量的编译警告
+
+对于某些暂时不用，以后可能用到的临时变量，为了避免警告，我们可以使用如下方法将这个警告消除：
+
+```
+- (NSInteger)giveMeFive { 
+ NSString *foo; 
+ #pragma unused (foo) 
+ return 5; 
+}
+```
+
+#### 3. 手动标明警告和错误
+
+手动明确一个错误：
+
+```
+- (NSInteger)divide:(NSInteger)dividend by:(NSInteger)divisor { 
+ #error Whoa, buddy, you need to check for zero here! 
+ return (dividend / divisor); 
+}
+```
+手动明确一个警告：
+
+```
+- (float)divide:(float)dividend by:(float)divisor { 
+ #warning Dude, don't compare floating point numbers like this! 
+ if (divisor != 0.0) { 
+  return (dividend / divisor); 
+ } else {  return NAN; 
+ } 
+}
+```
+
+-------
+
+### 参考文献：
+1. [王垠：编程的智慧](https://www.jianshu.com/p/7645a5ea7f46)
+2. [美团点评技术团队：聊聊clean code](https://tech.meituan.com/clean-code.html)
+3. [禅与 Objective-C 编程艺术](禅与 Objective-C 编程艺术)
+4. [J_Knight 的文集：iOS - 《Effective Objective-C 2.0》](https://www.jianshu.com/nb/6074358)
+5. [蝴蝶之梦天使：iOS代码编程规范-根据项目经验汇总](https://www.jianshu.com/p/08be5b30ff82)
+6. [高家二少爷：Objective-C高质量代码参考规范](https://www.jianshu.com/p/003f2d777ee8)
+7. [J_Knight 的文集：iOS 代码规范](https://knightsj.github.io/2017/06/14/iOS%20代码规范/)
+
 
