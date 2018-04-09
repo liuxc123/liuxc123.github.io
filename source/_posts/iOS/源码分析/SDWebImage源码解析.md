@@ -155,8 +155,8 @@ OK～基本流程大概清楚了，我们看一下每个层具体实现吧～
    }
 ```
 
-> 值得一提的是，在这一层，使用一个字典`operationDictionary`专门用作存储操作的缓存，随时添加，删除操作任务。
-> 而这个字典是`UIView+WebCacheOperation`分类的关联对象，它的存取方法使用运行时来操作：
+值得一提的是，在这一层，使用一个字典`operationDictionary`专门用作存储操作的缓存，随时添加，删除操作任务。
+而这个字典是`UIView+WebCacheOperation`分类的关联对象，它的存取方法使用运行时来操作：
 
 ```
  // ==============  UIView+WebCacheOperation.m ============== //
@@ -177,6 +177,8 @@ OK～基本流程大概清楚了，我们看一下每个层具体实现吧～
 为什么不直接在`UIImageView+WebCache`里直接关联这个对象呢？我觉得这里作者应该是遵从面向对象的**单一职责原则（SRP：Single responsibility principle）**，就连类都要履行这个职责，何况分类呢？这里作者专门创造一个分类`UIView+WebCacheOperation`来管理操作缓存（字典）。
 
 到这里，UIKit层上面的东西都讲完了，现在开始正式讲解工具层。
+
+## 工具层
 
 上文提到过，`SDWebImageManager`同时管理`SDImageCache`和`SDWebImageDownloader`两个类，它是这一层的老大哥。在下载任务开始的时候，`SDWebImageManager`首先访问`SDImageCache`来查询是否存在缓存，如果有缓存，直接返回缓存的图片。如果没有缓存，就命令`SDWebImageDownloader`来下载图片，下载成功后，存入缓存，显示图片。以上是`SDWebImageManager`大致的工作流程。
 
