@@ -131,7 +131,7 @@
 <meta name="keywords" content="iOS,Objective-C,源码解析">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YTKNetwork源码解析">
-<meta property="og:url" content="http://yoursite.com/2018/03/18/iOS/源码分析/YTKNetwork源码解析/index.html">
+<meta property="og:url" content="http://yoursite.com/2018/04/10/iOS/源码分析/YTKNetwork源码解析/index.html">
 <meta property="og:site_name" content="liuxc的博客">
 <meta property="og:description" content="作为一名iOS开发工作者，大家应该都听过YTKNetwork框架吧。它是猿题库技术团队开源的一个网络请求框架，内部封装了AFNetworking。它把每个请求实例化，管理它的生命周期，也可以管理多个请求。 在正式讲解源码之前，我会先讲一下该框架所用的架构和设计模式。我总觉得对架构和设计有一定的了解的话，会有助于对源码的理解。 1. 架构 先上图：   在这里简单说明一下：  YTKNetwork框">
 <meta property="og:locale" content="zh-Hans">
@@ -139,7 +139,7 @@
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/859001-c5c7e9ff32b2e647.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/859001-6c5f41fbe2993059.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/859001-eab27afc98b324bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-03-26T02:01:42.995Z">
+<meta property="og:updated_time" content="2018-04-10T01:56:03.191Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YTKNetwork源码解析">
 <meta name="twitter:description" content="作为一名iOS开发工作者，大家应该都听过YTKNetwork框架吧。它是猿题库技术团队开源的一个网络请求框架，内部封装了AFNetworking。它把每个请求实例化，管理它的生命周期，也可以管理多个请求。 在正式讲解源码之前，我会先讲一下该框架所用的架构和设计模式。我总觉得对架构和设计有一定的了解的话，会有助于对源码的理解。 1. 架构 先上图：   在这里简单说明一下：  YTKNetwork框">
@@ -173,7 +173,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/18/iOS/源码分析/YTKNetwork源码解析/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/10/iOS/源码分析/YTKNetwork源码解析/"/>
 
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/iOS/源码分析/YTKNetwork源码解析/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/10/iOS/源码分析/YTKNetwork源码解析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="liuxc">
@@ -369,8 +369,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T18:03:05+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-10T09:27:15+08:00">
+                2018-04-10
               </time>
             
 
@@ -385,8 +385,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-03-26T10:01:42+08:00">
-                2018-03-26
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-10T09:56:03+08:00">
+                2018-04-10
               </time>
             
           </span>
@@ -422,9 +422,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/18/iOS/源码分析/YTKNetwork源码解析/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/10/iOS/源码分析/YTKNetwork源码解析/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/18/iOS/源码分析/YTKNetwork源码解析/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/10/iOS/源码分析/YTKNetwork源码解析/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -792,13 +792,13 @@
 <p>我们先来分别看一下请求成功的处理和失败的处理：</p>
 <p>请求成功的处理：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//YTKNetworkAgent.m</span><br><span class="line">//请求成功：主要负责将结果写入缓存&amp;回调成功的代理和block</span><br><span class="line">- (void)requestDidSucceedWithRequest:(YTKBaseRequest *)request &#123;</span><br><span class="line">    </span><br><span class="line">    @autoreleasepool &#123;</span><br><span class="line">        //写入缓存 </span><br><span class="line">        [request requestCompletePreprocessor];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dispatch_async(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        </span><br><span class="line">        //告诉Accessories请求就要停止了</span><br><span class="line">        [request toggleAccessoriesWillStopCallBack];</span><br><span class="line">        </span><br><span class="line">        //在真正的回调之前做的处理,用户自定义</span><br><span class="line">        [request requestCompleteFilter];</span><br><span class="line">        //如果有代理，则调用成功的代理</span><br><span class="line">        if (request.delegate != nil) &#123;</span><br><span class="line">            [request.delegate requestFinished:request];</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //如果传入了成功回调的代码，则调用</span><br><span class="line">        if (request.successCompletionBlock) &#123;</span><br><span class="line">            request.successCompletionBlock(request);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        //告诉Accessories请求已经结束了</span><br><span class="line">        [request toggleAccessoriesDidStopCallBack];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我么可以看到，在请求成功以后，第一个做的是写入缓存，我们来看一下<code>requestCompletePreprocessor</code>方法的实现：</p>
+<p>我么可以看到，在请求成功以后，第一个做的是写入缓存，我们来看一下<code>requestCompletePreprocessor</code>方法的实现：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//YTKRequest.m</span><br><span class="line">- (void)requestCompletePreprocessor &#123;</span><br><span class="line">    </span><br><span class="line">    [super requestCompletePreprocessor];</span><br><span class="line">    //是否异步将responseData写入缓存（写入缓存的任务放在专门的队列进行）</span><br><span class="line">    if (self.writeCacheAsynchronously) &#123;</span><br><span class="line">        </span><br><span class="line">        dispatch_async(ytkrequest_cache_writing_queue(), ^&#123;</span><br><span class="line">            //写入缓存文件</span><br><span class="line">            [self saveResponseDataToCacheFile:[super responseData]];</span><br><span class="line">        &#125;);</span><br><span class="line">        </span><br><span class="line">    &#125; else &#123;</span><br><span class="line">         //写入缓存文件</span><br><span class="line">        [self saveResponseDataToCacheFile:[super responseData]];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">//写入缓存文件</span><br><span class="line">- (void)saveResponseDataToCacheFile:(NSData *)data &#123;</span><br><span class="line">    </span><br><span class="line">    if ([self cacheTimeInSeconds] &gt; 0 &amp;&amp; ![self isDataFromCache]) &#123;</span><br><span class="line">        if (data != nil) &#123;</span><br><span class="line">            @try &#123;</span><br><span class="line">                // 1. 保存request的responseData到cacheFilePath</span><br><span class="line">                [data writeToFile:[self cacheFilePath] atomically:YES];</span><br><span class="line">                // 2. 保存request的metadata到cacheMetadataFilePath</span><br><span class="line">                YTKCacheMetadata *metadata = [[YTKCacheMetadata alloc] init];</span><br><span class="line">                metadata.version = [self cacheVersion];</span><br><span class="line">                metadata.sensitiveDataString = ((NSObject *)[self cacheSensitiveData]).description;</span><br><span class="line">                metadata.stringEncoding = [YTKNetworkUtils stringEncodingWithRequest:self];</span><br><span class="line">                metadata.creationDate = [NSDate date];</span><br><span class="line">                metadata.appVersionString = [YTKNetworkUtils appVersionString];</span><br><span class="line">                [NSKeyedArchiver archiveRootObject:metadata toFile:[self cacheMetadataFilePath]];</span><br><span class="line">                </span><br><span class="line">            &#125; @catch (NSException *exception) &#123;</span><br><span class="line">                YTKLog(@&quot;Save cache failed, reason = %@&quot;, exception.reason);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>首先看一下写入缓存操作的执行条件：当<code>cacheTimeInSeconds</code>方法返回大于0并且<code>isDataFromCache</code>为NO的时候会进行写入缓存。</p>
 <p><code>cacheTimeInSeconds</code>方法返回的是缓存保存的时间，它最初定义在YTKBaseRquest里面，默认返回是-1：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//YTKBaseRequest.m</span><br><span class="line">- (NSInteger)cacheTimeInSeconds &#123;</span><br><span class="line">    return -1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>所以说YTKNetwork默认是不进行缓存的，如果用户需要做缓存，则需要在自定义的request类里面返回一个大于0的整数，这个整数的单位是秒。</p>
-<p><code>isDataFromCache</code>属性在上面讲解发送请求部分里的查询缓存的步骤里有介绍。在这里再强调一下：<code>isDataFromCache</code>的默认值是NO。在请求发起之前，-<br>查询缓存的时候：</p>
+<p><code>isDataFromCache</code>属性在上面讲解发送请求部分里的查询缓存的步骤里有介绍。在这里再强调一下：<code>isDataFromCache</code>的默认值是NO。在请求发起之前，<br>查询缓存的时候：</p>
 <ul>
 <li>如果发现缓存不可用（或忽略缓存），则立即发送请求，这个时候，isDataFromCache的值不做更改，仍然是NO。</li>
 <li>如果发现缓存可用（在不忽略缓存的情况下），就要将isDataFromCache属性设置为YES，说明将不需要发送请求，直接在里获取数据了。</li>
@@ -966,8 +966,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/16/hexo/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/04/08/Data Structure & Algorithm/数据结构/" rel="next" title="数据结构&算法 in Swift">
+                <i class="fa fa-chevron-left"></i> 数据结构&算法 in Swift
               </a>
             
           </div>
@@ -975,10 +975,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/26/iOS/源码分析/SDWebImage源码解析/" rel="prev" title="SDWebImage源码解析">
-                SDWebImage源码解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -1345,8 +1341,8 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/03/18/iOS/源码分析/YTKNetwork源码解析/';
-          this.page.identifier = '2018/03/18/iOS/源码分析/YTKNetwork源码解析/';
+          this.page.url = 'http://yoursite.com/2018/04/10/iOS/源码分析/YTKNetwork源码解析/';
+          this.page.identifier = '2018/04/10/iOS/源码分析/YTKNetwork源码解析/';
           this.page.title = 'YTKNetwork源码解析';
         };
         var d = document, s = d.createElement('script');

@@ -2,7 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2018/04/08/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
+    <loc>http://yoursite.com/2018/04/10/iOS/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/YTKNetwork%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2018-04-10T01:56:03.191Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2018/04/08/Data%20Structure%20&%20Algorithm/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/</loc>
     
     <lastmod>2018-04-09T09:17:49.702Z</lastmod>
     
@@ -19,13 +26,6 @@
     <loc>http://yoursite.com/2018/03/26/iOS/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/SDWebImage%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
     
     <lastmod>2018-03-26T03:55:21.216Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/18/iOS/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/YTKNetwork%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/</loc>
-    
-    <lastmod>2018-03-26T02:01:42.995Z</lastmod>
     
   </url>
   
