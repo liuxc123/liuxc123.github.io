@@ -1,0 +1,1411 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+<style>
+    .pace .pace-progress {
+        background: #1E92FB; /*进度条颜色*/
+        height: 3px;
+    }
+    .pace .pace-progress-inner {
+         box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+    }
+    .pace .pace-activity {
+        border-top-color: #1E92FB;    /*上边框颜色*/
+        border-left-color: #1E92FB;    /*左边框颜色*/
+    }
+</style>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="iOS,Swift," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="liuxc的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言本文章主要让大家了解掌握Swift中一些关键字的作用。 模块和源文件Swift的访问控制模型基于模块和源文件的概念。 模块是单一的代码分配单元———— 一个框架或应用程序会作为独立的单元构建和发布并且可以使用Swift的import关键字导入另一个模块。 Xcode 中的每个构建目标（例如应用程序包或框架）在 Swift 中被视为一个独立的模块。 如果你将应用程序的代码作为独立的框架组合在一起">
+<meta name="keywords" content="iOS,Swift">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift访问控制">
+<meta property="og:url" content="http://yoursite.com/2018/04/18/Swift访问控制/index.html">
+<meta property="og:site_name" content="liuxc的博客">
+<meta property="og:description" content="前言本文章主要让大家了解掌握Swift中一些关键字的作用。 模块和源文件Swift的访问控制模型基于模块和源文件的概念。 模块是单一的代码分配单元———— 一个框架或应用程序会作为独立的单元构建和发布并且可以使用Swift的import关键字导入另一个模块。 Xcode 中的每个构建目标（例如应用程序包或框架）在 Swift 中被视为一个独立的模块。 如果你将应用程序的代码作为独立的框架组合在一起">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-18T08:29:48.864Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift访问控制">
+<meta name="twitter:description" content="前言本文章主要让大家了解掌握Swift中一些关键字的作用。 模块和源文件Swift的访问控制模型基于模块和源文件的概念。 模块是单一的代码分配单元———— 一个框架或应用程序会作为独立的单元构建和发布并且可以使用Swift的import关键字导入另一个模块。 Xcode 中的每个构建目标（例如应用程序包或框架）在 Swift 中被视为一个独立的模块。 如果你将应用程序的代码作为独立的框架组合在一起">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"always","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/04/18/Swift访问控制/"/>
+
+
+
+
+
+  <title>Swift访问控制 | liuxc的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">liuxc的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">每天进步一点点</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/18/Swift访问控制/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="liuxc">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liuxc的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Swift访问控制</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-18T15:18:28+08:00">
+                2018-04-18
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-18T16:29:48+08:00">
+                2018-04-18
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/18/Swift访问控制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/18/Swift访问控制/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,456
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>本文章主要让大家了解掌握Swift中一些关键字的作用。</p>
+<h2 id="模块和源文件"><a href="#模块和源文件" class="headerlink" title="模块和源文件"></a>模块和源文件</h2><p>Swift的访问控制模型基于模块和源文件的概念。</p>
+<p>模块是单一的代码分配单元———— 一个框架或应用程序会作为独立的单元构建和发布并且可以使用Swift的<code>import</code>关键字导入另一个模块。</p>
+<p>Xcode 中的每个构建目标（例如应用程序包或框架）在 Swift 中被视为一个独立的模块。 如果你将应用程序的代码作为独立的框架组合在一起——或许可以在多个应用程序中封装和重用该代码——那么当在一个应用程序中导入和使用时，在该框架中定义的所有内容都将作为独立模块的一部分 ，或是当它在另一个框架中使用时。</p>
+<p>源文件是一个模块中的单个 Swift 源代码文件（实际上，是一个应用程序或是框架中的单个文件）。虽然通常在单独源文件中定义单个类型，但是一个源文件可以包含多个类型。函数等的定义。</p>
+<h2 id="访问级别"><a href="#访问级别" class="headerlink" title="访问级别"></a>访问级别</h2><p>Swift 为代码的实体提供个五个不同的访问级别。这些访问级别和定义实体的源文件相关，并且也和源文件所属的模块相关。</p>
+<ul>
+<li><code>Open</code>访问和<code>public</code>访问 允许实体被定义被模块中的任意源文件访问，同样可以被另一模块的源文件通过导入该定义模块来访问。在指定框架的公共接口时，通常使用<code>open</code>或<code>public</code>访问。<code>open</code>和<code>public</code>访问 之间的区别将在之后给出。</li>
+<li><code>Internal</code>访问 允许实体被定义模块中的任意源文件访问，但不能被该模块之外的任意源文件访问。通常在定义程序或是框架的内部结构时使用。</li>
+<li><p><code>private</code>访问 将实体的使用限制于封闭声明中。当一些细节仅在单独的声明中使用时，使用<code>private</code>访问隐藏特定功能的实现细节。</p>
+<p><code>open</code>访问时最高的（限制最少）访问级别，<code>private</code>是最低的（限制最多的）访问级别。</p>
+<p><code>open</code>访问仅适用于类和类成员，他与public访问区别如下：</p>
+</li>
+<li><p><code>public</code>访问，或任何更严格的访问级别的类，只能在其定义模块中被继承。</p>
+</li>
+<li><code>public</code>访问，或任何更严格的访问级别的类成员，只能被其定义模块的子类重写。</li>
+<li><code>open</code>类可以在其定义的模块中被继承，也可在任何导入定义模块的其他模块中被继承。</li>
+<li><code>open</code>类成员可以在其定义的模块的子类重写，也可以被导入其定义模块的任何模块重写。</li>
+</ul>
+<p>显式地标记类为 open 意味着你考虑过其他模块使用该类作为父类对代码的影响，并且相应地设计了类的代码。</p>
+<h3 id="访问级别的指导准则"><a href="#访问级别的指导准则" class="headerlink" title="访问级别的指导准则"></a>访问级别的指导准则</h3><p>Swift 中的访问级别遵循一个总体指导准则：<strong>实体不可以被更低（限制更多）访问级别的实体定义。</strong></p>
+<p>例如：</p>
+<ul>
+<li>一个 <code>public</code> 的变量其类型的访问级别不能是 <code>internal</code>, <code>file-private</code> 或是 <code>private</code>，因为在使用 <code>public</code> 变量的地方可能没有这些类型的访问权限。</li>
+<li>一个函数不能比它的参数类型和返回类型访问级别高，因为函数可以使用的环境而其参数和返回类型却不能使用。</li>
+</ul>
+<h4 id="默认访问级别"><a href="#默认访问级别" class="headerlink" title="默认访问级别"></a>默认访问级别</h4><p>如果你不指明访问级别的话，你的代码中的所有实体（以及本章后续提及的少数例外）都会默认为 <code>internal</code> 级别。因此，大多数情况下你不需要明确指定访问级别。</p>
+<h4 id="单目标应用的访问级别"><a href="#单目标应用的访问级别" class="headerlink" title="单目标应用的访问级别"></a>单目标应用的访问级别</h4><p>当你编写一个简单的单目标应用时，你的应用中的代码都是在本应用中使用的并且不会在应用模块之外使用。默认的 internal 访问级别已经匹配了这种需求。因此，你不需要明确自定访问级别。但你可能会将代码的一些部分标注为 <code>file private</code> 或<code>private</code> 以对模块中的其他代码隐藏它们的实现细节。</p>
+<h3 id="框架的访问级别"><a href="#框架的访问级别" class="headerlink" title="框架的访问级别"></a>框架的访问级别</h3><p>当你开发一个框架时，将该框架的面向公众的接口标注为 <code>open</code> 或 <code>public</code>，这样它就能被其他的模块看到或访问，比如导入该框架的应用。这个面相公众的接口就是该框架的应用编程接口（API）。</p>
+<blockquote>
+<p>注意</p>
+<p>你框架的任何内部实现细节仍可以使用 internal 默认访问级别，如果你想从框架的其他部分隐藏细节也可以将它们标注为 private 或 file private 。仅当你想将它设为框架的API时你才能将实体标注为 open 或 public 。</p>
+</blockquote>
+<h3 id="单元测试目标的访问级别"><a href="#单元测试目标的访问级别" class="headerlink" title="单元测试目标的访问级别"></a>单元测试目标的访问级别</h3><p>当你在写一个有单元测试目标的应用时，你的代码应该能被模块访问到以进行测试。默认情况下只有标注为 <code>open</code> 或 <code>public</code> 的才可以被其他模块访问。但是，如果你使用 <code>@testable</code>  属性标注了导入的生产模块并且用使能测试的方式编译了这个模块，单元测试目标就能访问任何 <code>internal</code> 的实体。</p>
+<h2 id="访问控制语法"><a href="#访问控制语法" class="headerlink" title="访问控制语法"></a>访问控制语法</h2><p>通过在实体的引入之前添加 <code>open</code> ， <code>public</code> ， <code>internal</code> ， <code>fileprivate</code> ，或 <code>private</code>  修饰符来定义访问级别。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public class SomePublicClass &#123;&#125;</span><br><span class="line">internal class SomeInternalClass &#123;&#125;</span><br><span class="line">fileprivate class SomeFilePrivateClass &#123;&#125;</span><br><span class="line">private class SomePrivateClass &#123;&#125;</span><br><span class="line"> </span><br><span class="line">public var somePublicVariable = 0</span><br><span class="line">internal let someInternalConstant = 0</span><br><span class="line">fileprivate func someFilePrivateFunction() &#123;&#125;</span><br><span class="line">private func somePrivateFunction() &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>除非已经标注，否则都会使用默认的 internal 访问级别，这一点在[默认访问级别]一节已经说明。这意味着 <code>SomeInternalClass</code>  和 <code>someInternalConstant</code>  不需要指明访问级别也会是 internal 级别。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">class SomeInternalClass &#123;&#125;          // implicitly internal</span><br><span class="line"> </span><br><span class="line">let someInternalConstant = 0      // implicitly internal</span><br></pre></td></tr></table></figure>
+<h2 id="自定类型"><a href="#自定类型" class="headerlink" title="自定类型"></a>自定类型</h2><p>如果你想给自定类型指明访问级别，那就在定义时指明。只要访问级别允许，新类型就可以被使用。例如，你定义了一个 file-private 的类，它就只能在定义文件中被当作属性类型、函数参数或返回类型使用。</p>
+<p>类型的访问控制级别也会影响它的成员的默认访问级别（它的属性，方法，初始化方法，下标）。如果你将类型定义为 private 或 file private 级别，那么它的成员的默认访问级别也会是 private 或file private。如果你将类型定义为 internal 或 public级别（或直接使用默认级别而不显式指出），那么它的成员的默认访问级别会是 internal 。</p>
+<blockquote>
+<p>重要<br>public 的类型默认拥有 internal 级别的成员，而不是 public。如果你想让其中的一个类型成员是 public 的，你必须按实示例代码指明。这个要求确保类型的面向公众的 API 是你选择的，并且可以避免将类型的内部工作细节公开成 API 的失误。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public class SomePublicClass &#123;                          // explicitly public class</span><br><span class="line">      public var somePublicProperty = 0               // explicitly public class member</span><br><span class="line">      var someInternalProperty = 0                      // implicitly internal class member</span><br><span class="line">      fileprivate func someFilePrivateMethod() &#123;&#125;   // explicitly file-private class member</span><br><span class="line">      private func somePrivateMethod() &#123;&#125;           // explicitly private class member</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">class SomeInternalClass &#123;                                 // implicitly internal class</span><br><span class="line">      var someInternalProperty = 0                      // implicitly internal class member</span><br><span class="line">      fileprivate func someFilePrivateMethod() &#123;&#125;   // explicitly file-private class member</span><br><span class="line">      private func somePrivateMethod() &#123;&#125;            // explicitly private class member</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">fileprivate class SomeFilePrivateClass &#123;            // explicitly file-private class</span><br><span class="line">      func someFilePrivateMethod() &#123;&#125;                 // implicitly file-private class member</span><br><span class="line">      private func somePrivateMethod() &#123;&#125;           // explicitly private class member</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">private class SomePrivateClass &#123;                     // explicitly private class</span><br><span class="line">      func somePrivateMethod() &#123;&#125;                     // implicitly private class member</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="元组类型"><a href="#元组类型" class="headerlink" title="元组类型"></a>元组类型</h3><p>元组类型的访问级别是所有类型里最严格的。例如，如果你将两个不同类型的元素组成一个元组，一个元素的访问级别是 internal，另一个是 private，那么这个元组类型是 private 级别的。</p>
+<blockquote>
+<p>注意<br>元组类型不像类、结构体、枚举和函数那样有一个单独的定义。元组类型的访问级别会在使用的时候被自动推断出来，不需要显式指明。</p>
+</blockquote>
+<h3 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h3><p>函数类型的访问级别由函数成员类型和返回类型中的最严格访问级别决定。如果函数的计算访问级别与上下文环境默认级别不匹配，你必须在函数定义时显式指出。</p>
+<p>下面的例子定义了一个称为<code>someFunction()</code> 的全局函数，而没有指明它的访问级别。你或许以为它会是默认的 “internal” 级别，但事实不是这样。这样的 <code>someFuniction()</code>是无法通过编译的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">func someFunction() -&gt; (SomeInternalClass, SomePrivateClass) &#123;</span><br><span class="line">    // function implementation goes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数的返回类型是一个由两个在自定义类型里定义的类组成的元组。其中一个类是 “internal” 级别的，另一个是 “private”。因此，这个元组的访问级别是“private”（元组成员的最严级别）。</p>
+<p>由于返回类型是 private 级别的，你必须使用 <code>private</code>  修饰符使其合法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">private func someFunction() -&gt; (SomeInternalClass, SomePrivateClass) &#123;</span><br><span class="line">    // function implementation goes here</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>public</code> 或 <code>internal</code> 标注<code>someFunction()</code> 的定义是无效的，使用默认的 internal 也是无效的，7的函数可能无法访问到 private 的函数返回值。</p>
+<h3 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h3><p>枚举中的独立成员自动使用该枚举类型的访问级别。你不能给独立的成员指明一个不同的访问级别。</p>
+<p>在下面的例子中 <code>CompassPoint</code> 有一个指明的“public”级别。里面的成员 <code>north</code> , <code>south</code> , <code>east</code> , 和 <code>west</code>因此是“public”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public enum CompassPoint &#123;</span><br><span class="line">      case north</span><br><span class="line">      case south</span><br><span class="line">      case east</span><br><span class="line">      case west</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="原始值和关联值"><a href="#原始值和关联值" class="headerlink" title="原始值和关联值"></a>原始值和关联值</h4><p>枚举定义中的原始值和关联值使用的类型必须有一个不低于枚举的访问级别。例如，你不能使用一个 <code>private</code> 类型作为一个 <code>internal</code> 级别的枚举类型中的原始值类型。</p>
+<h3 id="嵌套类型"><a href="#嵌套类型" class="headerlink" title="嵌套类型"></a>嵌套类型</h3><p>private 级别的类型中定义的嵌套类型自动为 private 级别。fileprivate 级别的类型中定义的嵌套类型自动为 fileprivate 级别。public 或 internal 级别的类型中定义的嵌套类型自动为 internal 级别。如果你想让嵌套类型是 public 级别的，你必须将其显式指明为 public。</p>
+<h2 id="子类"><a href="#子类" class="headerlink" title="子类"></a>子类</h2><p>你可以继承任何类只要是在当前可以访问的上下文环境中。但子类不能高于父类的访问级别，例如，你不能写一个 internal 父类的 public 子类。</p>
+<p>而且，你可以重写任何类成员（方法，属性，初始化器或下标），只要是在确定的访问域中是可见的。</p>
+<p>重写可以让一个继承类成员比它的父类中的更容易访问。在下例中，public 级别的类 A 有一个 fileprivate 级别的 <code>someMethod()</code> 函数。 B 是 A 的子类，有一个降低的“internal”级别。但是，类 B 对 someMethod() 函数进行了重写即改为“internal”级别，这比 <code>someMethod()</code> 的原本实现级别更高：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public class A &#123;</span><br><span class="line">         fileprivate func someMethod() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">internal class B: A &#123;</span><br><span class="line">         override internal func someMethod() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子类成员调用父类中比子类更低访问级别的成员，只要这个调用发生在一个允许的访问级别上下文中（即对 fileprivate 成员的调用要求父类在同一个源文件中，对 internal 成员的调用要求父类在同一个模块中）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class A &#123;</span><br><span class="line">         fileprivate func someMethod() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">internal class B: A &#123;</span><br><span class="line">         override internal func someMethod() &#123;</span><br><span class="line">         super.someMethod()</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为父类 A 和子类 B 定义在同一个源文件中，那么 B 类可以在 <code>someMethod()</code> 中调用父类的 <code>someMethod()</code>。</p>
+<h2 id="常量，变量，属性和下标"><a href="#常量，变量，属性和下标" class="headerlink" title="常量，变量，属性和下标"></a>常量，变量，属性和下标</h2><p>常量、变量、属性不能拥有比它们类型更高的访问级别。例如，你不能写一个public 的属性而它的类型是 private 的。类似的，下标也不能拥有比它的索引类型和返回类型更高的访问级别。</p>
+<p>如果常量、变量、属性或下标由private类型组成，那么常量、变量、属性或下标也要被标注为 private ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private var privateInstance = SomePrivateClass()</span><br></pre></td></tr></table></figure>
+<h2 id="Getters-和-Setters"><a href="#Getters-和-Setters" class="headerlink" title="Getters 和 Setters"></a>Getters 和 Setters</h2><p>常量、变量、属性和下标的 getter 和 setter 自动接收它们所属常量、变量、属性和下标的访问级别。</p>
+<p>你可以给 setter 函数一个比相对应 getter 函数更低的访问级别以限制变量、属性、下标的读写权限。你可以通过在 <code>var</code> 和 <code>subscript</code> 的置入器之前书写 <code>fileprivate(set)</code> , <code>private(set)</code>, 或 <code>internal(set)</code> 来声明更低的访问级别。</p>
+<blockquote>
+<p>注意<br>这个规则应用于存储属性和计算属性。即使你没有给一个存储属性书写一个明确的 getter 和 setter，Swift 会为你合成一个 getter 和 setter 以访问到存储属性的隐式存储。使用 <code>fileprivate(set)</code> , <code>private(set)</code> 和 <code>internal(set)</code> 可以改变这个合成的 setter 的访问级别，同样也可以改变计算属性的访问级别。</p>
+</blockquote>
+<p>下面的例子定义了一个称为 <code>TrackedString</code> 的结构体，它保持追踪一个字符串属性的修改次数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">struct TrackedString &#123;</span><br><span class="line">         private(set) var numberOfEdits = 0</span><br><span class="line">         var value: String = &quot;&quot; &#123;</span><br><span class="line">         didSet &#123;</span><br><span class="line">               numberOfEdits += 1</span><br><span class="line">         &#125;</span><br><span class="line">         &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>TrackedString</code> 结构体定义了一个可存储字符串的属性 <code>value</code> ，它又一个初始值 “” （空字符串）。这个结构图同样定义了一个可存储整数的属性 <code>numberOfEdits</code> ，它被用于记录 <code>value</code> 的修改次数。这个记录由 <code>value</code> 属性中的didset属性实现，它会增加 <code>numberOfEdits</code> 的值一旦 value 被设为一个新值。</p>
+<p><code>TrackedString</code> 结构体和 <code>value</code> 属性都没有显式指出访问级别修饰符，因此它们都遵循默认的 <code>internal</code> 级别。 <code>numberOfEdits</code> 属性的访问级别已经标注为<code>private(set)</code> 以说明这个属性的 <code>getter</code> 是默认的 <code>internal</code> 级别，但是这个属性只能被 <code>TrackedString</code> 内的代码设置。这允许 <code>TrackedString</code> 在内部修改 <code>numberOfEdits</code> 属性，而且可以展示这个属性作为一个只读属性当在结构体定义之外使用时——包括 <code>TrackedString</code> 的扩展。</p>
+<p>如果你创建了一个 <code>TrackedString</code> 的实例并修改了几次字符串的值，你可以看到 numberOfEdits 属性的值更新到匹配修改的次数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var stringToEdit = TrackedString()</span><br><span class="line">stringToEdit.value = &quot;This string will be tracked.&quot;</span><br><span class="line">stringToEdit.value += &quot; This edit will increment numberOfEdits.&quot;</span><br><span class="line">stringToEdit.value += &quot; So will this one.&quot;</span><br><span class="line">print(&quot;The number of edits is \(stringToEdit.numberOfEdits)&quot;)</span><br><span class="line">// Prints &quot;The number of edits is 3&quot;</span><br></pre></td></tr></table></figure>
+<p>尽管你可以从别的源文件中询问到 <code>numberOfEdits</code> 属性的当前值，但你不能从别的源文件中修改该属性的值。这个限制保护了 <code>TrackedString</code> 编辑追踪功能的实现细节，并同时为该功能的一个方面提供方便的访问。</p>
+<p>你若有必要也可以显式指明 <code>getter</code> 和 <code>setter</code>方法。下面的例子提供了一个定义为 <code>public</code> 级别的 <code>TrackedString</code> 结构体。结构体成员（包括 <code>numberOfEdits</code> 属性）因此有一个默认的 internal 级别。你可以设置 <code>numberOfEdits</code> 属性的getter方法为 public，setter 方法为 private 级别，通过结合 <code>public</code> 和 <code>private(set)</code> 访问级别修饰符：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public struct TrackedString &#123;</span><br><span class="line">      public private(set) var numberOfEdits = 0</span><br><span class="line">      public var value: String = &quot;&quot; &#123;</span><br><span class="line">            didSet &#123;</span><br><span class="line">                  numberOfEdits += 1</span><br><span class="line">            &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      public init() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="初始化器"><a href="#初始化器" class="headerlink" title="初始化器"></a>初始化器</h2><p>我们可以给自定义初始化方法设置一个低于或等于它的所属的类的访问级别。唯一的例外是必要初始化器（定义在必要初始化器）。必要初始化器必须和它所属类的访问级别一致。</p>
+<p>就像函数和方法的参数一样，初始化器的参数类型不能比初始化方法的访问级别还低。</p>
+<h3 id="默认初始化器"><a href="#默认初始化器" class="headerlink" title="默认初始化器"></a>默认初始化器</h3><p>正如默认初始化器中描述的那样，Swift 自动为任何结构体和类提供一个无参数的默认初始化方法，以给它的属性提供默认值但不会提供给初始化器自身。</p>
+<p>默认初始化方法与所属类的访问级别一致，除非该类型定义为 <code>public</code> 。如果一个类定义为 <code>public</code> ，那么默认初始化方法为 internal 级别。如果你想一个 public 类可以被一个无参初始化器初始化当在另一个模块中使用时，你必须显式提供一个 public 的无参初始化方法。</p>
+<h3 id="结构体的默认成员初始化器"><a href="#结构体的默认成员初始化器" class="headerlink" title="结构体的默认成员初始化器"></a>结构体的默认成员初始化器</h3><p>如果结构体的存储属性时 private 的，那么它的默认成员初始化方法就是 private 级别。如果结构体的存储属性时 file private 的，那么它的默认成员初始化方法就是 file private 级别。否则就是默认的 internal 级别。正如以上默认初始化的描述，如果你想在另一个模块中使用结构体的成员初始化方法，你必须提供在定义中提供一个 public 的成员初始化方法。</p>
+<h2 id="协议"><a href="#协议" class="headerlink" title="协议"></a>协议</h2><p>如果你想给一个协议类型分配一个显式的访问级别，那就在定义时指明。这让你创建的协议可以在一个明确的访问上下文中被接受。</p>
+<p>协议定义中的每一个要求的访问级别都自动设为与该协议相同。你不能将一个协议要求的访问级别设为与协议不同。这保证协议的所有要求都能被接受该协议的类型所见。</p>
+<p>注意如果你定义了一个 public 的协议，该协议的规定要求在被实现时拥有一个 public 的访问级别。这个行为不同于其他类型，一个 public 的类型的成员时 internal 访问级别。</p>
+<h3 id="协议继承"><a href="#协议继承" class="headerlink" title="协议继承"></a>协议继承</h3><p>如果你定义了一个继承已有协议的协议，这个新协议最高与它继承的协议访问级别一致。例如你不能写一个 <code>public</code> 的协议继承一个 <code>internal</code> 的协议。</p>
+<h3 id="协议遵循"><a href="#协议遵循" class="headerlink" title="协议遵循"></a>协议遵循</h3><p>类型可以遵循更低访问级别的协议。例如，你可以定义一个可在其他模块使用的 public 类型，但它就只能在定义模块中使用如果遵循一个 internal 的协议。</p>
+<p>遵循了协议的类的访问级别取这个协议和该类的访问级别的最小者。如果这个类型是 public 级别的，它所遵循的协议是 internal 级别，这个类型就是 internal 级别的。</p>
+<p>当你写或是扩张一个类型以遵循协议时，你必须确保该类按协议要求的实现方法与该协议的访问级别一致。例如，一个 public 的类遵循一个 internal 协议，该类的方法实现至少是 “internal” 的。</p>
+<blockquote>
+<p>注意<br>在 Swift 和 Objective-C 中协议遵循是全局的——一个类不可能在一个程序中用不同方法遵循一个协议。</p>
+</blockquote>
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>你可以在任何可访问的上下文环境中对类、结构体、或枚举进行扩展。在扩展中添加的任何类型成员都有着被扩展类型相同的访问权限。如果你扩展一个公开或者内部类型，你添加的任何新类型成员都拥有默认的内部访问权限。如果你扩展一个文件内私有的类型，你添加的任何新类型成员都拥有默认的私有访问权限。如果你扩展一个私有类型，你添加的任何新类型成员都拥有默认的私有访问权限。</p>
+<p>或者，你可以显式标注扩展的访问级别（例如， private extension ）已给扩展中的成员设置新的默认访问级别。这个默认同样可以在扩展中为单个类型成员重写。</p>
+<p>你不能给用于协议遵循的扩展显式标注访问权限修饰符。相反，在扩展中使用协议自身的访问权限作为协议实现的默认访问权限。</p>
+<h3 id="扩展中的私有成员"><a href="#扩展中的私有成员" class="headerlink" title="扩展中的私有成员"></a>扩展中的私有成员</h3><p>在同一文件中的扩展比如类、结构体或者枚举，可以写成类似多个部分的类型声明。你可以：</p>
+<ul>
+<li>在原本的声明中声明一个私有成员，然后在同一文件的扩展中访问它；</li>
+<li>在扩展中声明一个私有成员，然后在同一文件的其他扩展中访问它；</li>
+<li>在扩展中声明一个私有成员，然后在同一文件的原本声明中访问它。</li>
+</ul>
+<p>这样的行为意味着你可以和组织代码一样使用扩展，无论你的类型是否拥有私有成员。比如说，假设下面这样的简单协议：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protocol SomeProtocol &#123;</span><br><span class="line">    func doSomething()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>你可以使用扩展来添加协议遵循，比如这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct SomeStruct &#123;</span><br><span class="line">    private var privateVariable = 12</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">extension SomeStruct: SomeProtocol &#123;</span><br><span class="line">    func doSomething() &#123;</span><br><span class="line">        print(privateVariable)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>泛指类型和泛指函数的访问级别取泛指类型或函数以及泛型类型参数的访问级别的最小值。</p>
+<h2 id="类型别名"><a href="#类型别名" class="headerlink" title="类型别名"></a>类型别名</h2><p>任何你定义的类型同义名都被视为不同的类型以进行访问控制。一个类型同义名的访问级别不高于原类型。例如，一个 private 的类型同义名可联系到 private ，file-private ，internal ，public 或open 的类型，但 public 的类型同义名不可联系到 internal ，file-private 或 private 类型。</p>
+<blockquote>
+<p>注意<br>这条规则适用于为满足协议遵循而给类型别名关联值的情况。</p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+     
+
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.jpg" alt="liuxc 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/Swift/" rel="tag"><i class="fa fa-tag"></i> Swift</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/16/Design Mode/23个经典设计模式的Swift实现/" rel="next" title="23个经典设计模式的Swift实现">
+                <i class="fa fa-chevron-left"></i> 23个经典设计模式的Swift实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="liuxc" />
+            
+              <p class="site-author-name" itemprop="name">liuxc</p>
+              <p class="site-description motion-element" itemprop="description">每天进步一点点</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/liuxc123" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="lxc_work@126.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="https://www.zhihu.com/people/mirl-33/activities" target="_blank" title="知乎">
+                    
+                      <i class="fa fa-fw fa-globe"></i>知乎</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="http://www.jianshu.com/u/d96162b35a72" target="_blank" title="简书">
+                    
+                      <i class="fa fa-fw fa-globe"></i>简书</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块和源文件"><span class="nav-number">2.</span> <span class="nav-text">模块和源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问级别"><span class="nav-number">3.</span> <span class="nav-text">访问级别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问级别的指导准则"><span class="nav-number">3.1.</span> <span class="nav-text">访问级别的指导准则</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#默认访问级别"><span class="nav-number">3.1.1.</span> <span class="nav-text">默认访问级别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单目标应用的访问级别"><span class="nav-number">3.1.2.</span> <span class="nav-text">单目标应用的访问级别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#框架的访问级别"><span class="nav-number">3.2.</span> <span class="nav-text">框架的访问级别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#单元测试目标的访问级别"><span class="nav-number">3.3.</span> <span class="nav-text">单元测试目标的访问级别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#访问控制语法"><span class="nav-number">4.</span> <span class="nav-text">访问控制语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定类型"><span class="nav-number">5.</span> <span class="nav-text">自定类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#元组类型"><span class="nav-number">5.1.</span> <span class="nav-text">元组类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数类型"><span class="nav-number">5.2.</span> <span class="nav-text">函数类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#枚举类型"><span class="nav-number">5.3.</span> <span class="nav-text">枚举类型</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原始值和关联值"><span class="nav-number">5.3.1.</span> <span class="nav-text">原始值和关联值</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#嵌套类型"><span class="nav-number">5.4.</span> <span class="nav-text">嵌套类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#子类"><span class="nav-number">6.</span> <span class="nav-text">子类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常量，变量，属性和下标"><span class="nav-number">7.</span> <span class="nav-text">常量，变量，属性和下标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Getters-和-Setters"><span class="nav-number">8.</span> <span class="nav-text">Getters 和 Setters</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化器"><span class="nav-number">9.</span> <span class="nav-text">初始化器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#默认初始化器"><span class="nav-number">9.1.</span> <span class="nav-text">默认初始化器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构体的默认成员初始化器"><span class="nav-number">9.2.</span> <span class="nav-text">结构体的默认成员初始化器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#协议"><span class="nav-number">10.</span> <span class="nav-text">协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#协议继承"><span class="nav-number">10.1.</span> <span class="nav-text">协议继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协议遵循"><span class="nav-number">10.2.</span> <span class="nav-text">协议遵循</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">11.</span> <span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展中的私有成员"><span class="nav-number">11.1.</span> <span class="nav-text">扩展中的私有成员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#泛型"><span class="nav-number">12.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#类型别名"><span class="nav-number">13.</span> <span class="nav-text">类型别名</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">liuxc</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站共&#58;</span>
+    
+    <span title="博客全站共">61.4k&nbsp字</span>
+  
+</div>
+
+
+  <div class="powered-by">
+    <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+      本站访客数:<span id="busuanzi_value_site_uv"></span></span>
+  </div>
+
+
+
+
+
+  
+  <span class="post-meta-divider">|</span>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.3"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://yoursite.com/2018/04/18/Swift访问控制/';
+          this.page.identifier = '2018/04/18/Swift访问控制/';
+          this.page.title = 'Swift访问控制';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+  <script type="text/javascript" src="/js/src/exturl.js?v=5.1.3"></script>
+
+
+</body>
+</html>
