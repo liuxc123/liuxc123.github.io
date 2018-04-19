@@ -349,7 +349,7 @@ let p2 = p1.clone()
 > 单例就像一个公司的IT部门，他们是唯一的存在，并且被所有人直接访问。
 
 ![](https://user-gold-cdn.xitu.io/2018/3/15/16228bef47904c11?imageslim)
-配图：The IT Crowd
+> 配图：The IT Crowd
 
 **官方定义**
 > 保证一个类仅有一个实例，并提供一个访问它的全局访问点。
@@ -1308,6 +1308,7 @@ Archer().attack() // output: bow
 > 模板方法就是抽象类衍生出来的继承树。
 
 ![](https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3167143621,3882552175&fm=27&gp=0.jpg)
+
 > 配图：https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3167143621,3882552175&fm=27&gp=0.jpg
 
 **官方定义**
