@@ -393,3 +393,1070 @@ let s = Singleton.sharedInstance()
 let s2 = Singleton() // ERROR: initializer is inaccessible due to 'private' protection level
 ```
 
+-------
+
+## Adapter 适配器模式
+> 适配器就像一个电源转换插头。
+
+![](http://www.wap135.com/270/timg08/uploaded/i8/TB2452gtpXXXXaLXXXXXXXXXXXX_!!622114048.jpg)
+> 配图: http://www.wap135.com/270/timg08/uploaded/i8/TB2452gtpXXXXaLXXXXXXXXXXXX_!!622114048.jpg
+
+**官方定义**
+> 将一个类的接口转换成客户希望的另外一个接口。适配器模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。
+
+一个类能称之为适配器，就是指它能把另一个类进行某种变形，让其能和实际需求对接。 比如一个底层数据模型，可以通过不同的UI适配器，对应不同的展现需要。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c30357dd989?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Target {
+    var value: String { get }
+}
+
+struct Adapter: Target {
+    let adaptee: Adaptee
+    var value: String {
+        return "\(adaptee.value)"
+    }
+    init(_ adaptee: Adaptee) {
+        self.adaptee = adaptee
+    }
+}
+
+struct Adaptee {
+    var value: Int
+}
+
+Adapter(Adaptee(value: 1)).value // "1"
+```
+
+-------
+
+## Bridge 桥接模式
+
+> 桥接模式就是这么一座桥，它矗立在具体和抽象之间，当你调用的时候只看到了抽象，但是它内部实现时“桥接”到了具体。
+
+![](https://refactoring.guru/design-patterns/bridge)
+> 配图: https://refactoring.guru/design-patterns/bridge
+
+**官方定义**
+> 将抽象部分与实现部分分离，使它们都可以独立的变化。
+
+桥接模式是继工厂模式之后另一个有点绕的概念，为了不一言不合就抛概念把大家绕晕，我们直接来看一下这个模式最终成型的样子。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228e871b1e521e?imageView2/0/w/1280/h/960/ignore-error/1)
+
+首先假设我们封装了一个“开关能力”的接口。
+
+```
+protocol 开关能力 {
+    func turnOn(_ on: Bool)
+}
+```
+这个接口只有一个方法，实现者需要提供打开/关闭开关会触发什么操作。
+
+然后我们抽象一个叫“设备”的类出来，这个类就有意思了：
+
+* 首先他有一个实现了开关能力的实例变量，并通过初始化赋好值。
+* 他有一个方法的实现就是直接提供了开关能力里的实现。
+
+```
+class 设备 {
+    let obj: 开关能力
+    func turnOn(_ on: Bool) {
+        obj.turnOn(on)
+    }
+    init(_ obj: 开关能力) {
+        self.obj = obj
+    }
+}
+
+```
+
+这样，其实一个桥接模式就已经搭建完了。再讲解之前，我们直接看一下如何应用它：
+
+```
+class 电视: 开关能力 {
+    func turnOn(_ on: Bool) {
+        if on {
+            // 打开电视
+        } else {
+            // 关闭电视
+        }
+    }
+}
+
+class 空调: 开关能力 {
+    func turnOn(_ on: Bool) {
+        if on {
+            // 打开空调
+        } else {
+            // 关闭空调
+        }
+    }
+}
+
+let tv = 设备(电视())
+tv.turnOn(true) // 打开电视
+
+let aircon = 设备(空调())
+aircon.turnOn(false) // 关闭空调
+```
+
+通过这段代码可以看出：
+
+在把抽象的`设备`应用到具体的业务的时候，这个模式采用的是组合了一个实现了`开关能力`接口的实例，而没用继承。
+最终调用的时候，是由统一的`设备`作为接入点的，而不是`电视`，`空调`这些具体类，具体的实现是通过组合的方式注入到`设备`里的。
+
+了解了这个流程后，一个事情就明朗了：
+
+> 这不就是在用组合代替继承吗？
+
+没错，它把需要变化的代码通过接口代理出去，而避免了继承。
+
+但是，桥接模式的桥在哪里？
+
+这时，要搬出他的概念了： [Bridge pattern - Wikipedia：](https://en.wikipedia.org/wiki/Bridge_pattern)
+
+> The bridge pattern is a design pattern used in software engineering which is meant to "decouple an abstraction from its implementation so that the two can vary independently".
+> 桥接模式解耦了抽象和具体，让它们可以独立变化。
+
+从代码去寻找具体和抽象，就可以发现：
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c553d9635f6?imageView2/0/w/1280/h/960/ignore-error/1)
+
+**这座桥能走通的关键就是这个组合在抽象类里的变量。**
+
+最后，你会发现，这不就是Adapter和Adaptee吗？ ~~没错，设计模式其实是连续剧来着。~~
+
+不同在于适配器的关注点是**如何让两个不兼容的类对接**， 而桥接模式关注点是**解耦**。
+
+-------
+
+## Composite 组合模式
+
+> 组合模式就像一个公司的组织架构，存在基层员工(Leaf)和管理者(Composite)，他们都实现了组件(Component)的work方法，这种树状结构的每一级都是一个功能完备的个体。
+
+![](https://realtimeboard.com/static/images/page/examples/detail/organizational-chart.png)
+
+> 配图：https://realtimeboard.com/static/images/page/examples/detail/organizational-chart.png
+
+**官方定义**
+
+> 将对象组合成树形结构以表示"部分-整体"的层次结构。组合模式使得用户对单个对象和组合对象的使用具有一致性。
+
+这个组合模式不是“组合优于继承”的那种“组合”，这里是狭义的指代一种特定场景，就是如配图描述的一种树状结构。
+
+理解这个模式要知道三个设定：
+* **Component**：一个有功能性的组件。
+* **Leaf**：它实现了组件。
+* **Composite**：它既实现了组件，他又包含多个组件。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c624d5b8e2d?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Component {
+    func someMethod()
+}
+
+class Leaf: Component {
+    func someMethod() {
+        // Leaf
+    }
+}
+
+class Composite: Component {
+    var components = [Component]()
+    func someMethod() {
+        // Composite
+    }
+}
+
+let leaf = Leaf()
+let composite = Composite()
+composite.components += [leaf]
+
+composite.someMethod()
+leaf.someMethod()
+```
+
+这个模式的精髓就是`Composite`这个角色，事实上`Leaf`可以看做一个特殊的`Compostie`。由于他即可以是一个功能执行者，又可以包含其它节点，这个特性可以派生出泛用度很高的树状结构。
+
+-------
+
+## Decorator 装饰者模式
+
+> 如果点咖啡时价格的计算是`牛奶(糖(咖啡(价格: 19元)))`就好了
+
+![](http://cdn.marksdailyapple.com/wordpress/wp-content/themes/Marks-Daily-Apple-Responsive/images/blog2/coffee.jpg)
+
+> 配图：http://cdn.marksdailyapple.com/wordpress/wp-content/themes/Marks-Daily-Apple-Responsive/images/blog2/coffee.jpg
+
+**官方定义**
+
+> 动态地给一个对象添加一些额外的职责。就增加功能来说，装饰器模式相比生成子类更为灵活。
+
+下面我们就用装饰者模式的思想来设计这个点咖啡程序:
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c6fcfc306fb?imageView2/0/w/1280/h/960/ignore-error/1)
+
+### 代码
+
+```
+protocol Component {
+    var cost: Int { get }
+}
+
+protocol Decorator: Component {
+    var component: Component { get }
+    init(_ component: Component)
+}
+
+struct Coffee: Component {
+    var cost: Int
+}
+
+struct Sugar: Decorator {
+    var cost: Int {
+        return component.cost + 1
+    }
+    var component: Component
+    init(_ component: Component) {
+        self.component = component
+    }
+}
+
+struct Milk: Decorator {
+    var cost: Int {
+        return component.cost + 2
+    }
+    var component: Component
+    init(_ component: Component) {
+        self.component = component
+    }
+}
+
+Milk(Sugar(Coffee(cost: 19))).cost
+```
+
+当你的需求是零散的不断给“主菜加点佐料”的时候，并且这些佐料会经常变化，那么这个模式就可以有效的解决排列组合产生的类爆炸
+
+理解的一个关键点就是区分**组件Component和装饰者Decorator**两个角色，单纯组件的实现者（咖啡）是被装饰的对象，他不再能装饰别人。
+
+这个模式没有一个集中的**计算器**，每一个装饰者都参与了部分计算并输出当下的结果。
+
+-------
+
+## Facade 外观模式
+
+> 外观模式就是化繁为简。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c845ed667c4?imageView2/0/w/1280/h/960/ignore-error/1)
+
+> 配图：http://www.3dmgame.com/news/201709/3684484.html
+
+**官方定义**
+
+> 为子系统中的一组接口提供一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。
+
+值得一提的是，这个单词读音很怪。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c87db8d9efa?imageView2/0/w/1280/h/960/ignore-error/1)
+
+在谈起外观模式的时候，常常是指对一个复杂的(旧)代码库在不改变其内在的情况下，包装一层易于调用的表层API。
+
+外观模式不会采用继承，而是用接口和组合。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c8a0ba5d3bd?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Facade {
+    func simpleMethod()
+}
+
+class LegacyCode {
+    func someMethod1() { }
+    func someMethod2() { }
+}
+
+extension LegacyCode: Facade {
+    func simpleMethod() {
+        someMethod1()
+        someMethod2()
+    }
+}
+
+class Client {
+    let f: Facade = LegacyCode()
+}
+
+let c = Client()
+c.f.simpleMethod()
+```
+
+-------
+
+## Flyweight 享元模式
+
+> 享元模式就像CPU的Cache Memory，它通过对缓存的命中来实现速度的提升和内存的降低。
+
+![](http://www.computerhope.com/issues/pictures/cpu_cache_die.jpg)
+> 配图：http://www.computerhope.com/issues/pictures/cpu_cache_die.jpg
+
+**官方定义**
+> 运用共享技术有效地支持大量细粒度的对象。
+
+享元模式其实就是指一套缓存系统。 显然他是一种复合模式，使用工厂模式来创造实例。 适用场景是系统中存在重复的对象创建过程。 好处是节省了内存加快了速度。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c958468b9bc?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+struct TargetObject {
+    var title: String?
+    func printTitle() {
+        print(title)
+    }
+}
+
+class Cache {
+    var targetObjects = [String: TargetObject]()
+    func lookup(key: String) -> TargetObject {
+        if targetObjects.index(forKey: key) == nil {
+            return TargetObject()
+        }
+        return targetObjects[key]!
+    }
+}
+
+let c = Cache()
+c.targetObjects["Test"] = TargetObject(title: "Test")
+c.lookup(key: "123").printTitle() // nil
+c.lookup(key: "Test").printTitle() // Test
+```
+
+-------
+
+## Proxy 代理模式
+
+> 代理模式让一个类成为了另一个类的实际接口。
+
+![](http://tse2.mm.bing.net/th?id=OIP.igizh16RdxH-Xq9jCR7KLgHaCx&w=300&h=112&c=7&o=5&dpr=2&pid=1.7)
+
+**官方定义**
+> 为其他对象提供一种代理以控制对这个对象的访问。
+
+有两种常见的代理场景：
+
+* **Protection proxy**： 出于安全考虑，通过一个表层的类间接调用底层的类。
+* **Virtual proxy**：出于性能考虑，通过一个低耗的类延迟调用一个高耗的类。
+
+但他们的实现是类似的：
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c9e9eea16e6?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Subject {
+    mutating func operation()
+}
+
+struct SecretObject: Subject {
+    func operation() {
+        // real implementation
+    }
+}
+
+struct PublicObject: Subject {
+    private lazy var s = SecretObject()
+    mutating func operation() {
+        s.operation()
+    }
+}
+
+var p = PublicObject()
+p.operation()
+```
+
+`SecretObject`既可以看做一个隐藏类，又可以看做一个高费的类。通过`PublicObject`对他的代理，可以实现信息隐藏和延迟加载两个特性。
+
+-------
+
+## Chain of responsibility 责任链模式
+
+> 责任链模式就像去取钱，每一面值都参与了计算和职责传递。
+
+![](http://www.joezimjs.com/wp-content/uploads/chain_of_responsibility_atm.png)
+> 配图：http://www.joezimjs.com/wp-content/uploads/chain_of_responsibility_atm.png
+
+**官方定义**
+
+```
+避免请求发送者与接收者耦合在一起，让多个对象都有可能接收请求，将这些对象连接成一条链，并且沿着这条链传递请求，直到有对象处理它为止。
+```
+UIKit的touch事件就应用了责任链模式
+
+这个模式的实现就是**既实现一个接口，又组合这个接口**，这样自己执行完毕后就可以调用下一个执行者。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228cb99e25bae4?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol ChainTouchable {
+    var next: ChainTouchable? { get }
+    func touch()
+}
+
+class ViewA: ChainTouchable {
+    var next: ChainTouchable? = ViewB()
+    func touch() {
+        next?.touch()
+    }
+}
+
+class ViewB: ChainTouchable {
+    var next: ChainTouchable? = ViewC()
+    func touch() {
+        next?.touch()
+    }
+}
+
+class ViewC: ChainTouchable {
+    var next: ChainTouchable? = nil
+    func touch() {
+        print("C")
+    }
+}
+
+let a = ViewA()
+a.touch() // OUTPUT: C
+```
+
+-------
+
+## Command 命令模式
+
+> 命令模式就是一种指令系统。
+
+![](http://cdn.wikimg.net/strategywiki/images/thumb/e/e3/Light-bot_2-3.jpg/914px-Light-bot_2-3.jpg)
+> 配图：http://cdn.wikimg.net/strategywiki/images/thumb/e/e3/Light-bot_2-3.jpg/914px-Light-bot_2-3.jpg
+
+**官方定义**
+> 将一个请求封装成一个对象，从而使您可以用不同的请求对客户进行参数化。
+
+命令模式有两个特征：
+
+* 命令逻辑对象化，这个命令对象可以从外界通过参数传入，也可内部实现。
+* 支持undo，因为每个命令对象自己知道如何撤销（反命令），所以可以封装到命令对象内部。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228cc35893ebcd?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Command {
+    var operation: () -> Void { get }
+    var backup: String { get }
+    func undo()
+}
+
+struct ConcreteCommand: Command {
+    var backup: String
+    var operation: () -> Void
+    func undo() {
+        print(backup)
+    }
+}
+
+struct Invoker {
+    var command: Command
+    func execute() {
+        command.operation()
+    }
+    func undo() {
+        command.undo()
+    }
+}
+
+let printA = ConcreteCommand(backup: "Default A") {
+    print("A")
+}
+let i1 = Invoker(command: printA)
+i1.execute() // OUTPUT: A
+
+let printB = ConcreteCommand(backup: "Default B") {
+    print("B")
+}
+let i2 = Invoker(command: printB)
+i2.execute() // OUTPUT: B
+i2.undo() // OUTPUT: Default B
+```
+
+-------
+
+## Interpreter 解释器模式
+
+> 有了解释器，Skyrim的龙语也不在话下。
+
+![](https://staticdelivery.nexusmods.com/mods/110/images/thumbnails/32821-3-1362476170.jpg)
+> 配图：https://staticdelivery.nexusmods.com/mods/110/images/thumbnails/32821-3-1362476170.jpg
+
+**官方定义**
+
+> 给定一个语言，定义它的文法表示，并定义一个解释器，这个解释器使用该标识来解释语言中的句子。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228cf4dc93e284?imageView2/0/w/1280/h/960/ignore-error/1)
+
+我们可以实现一个能计算文本“1加1”的解释器。
+
+```
+protocol Expression {
+    func evaluate(_ context: String) -> Int
+}
+
+struct MyAdditionExpression: Expression {
+    func evaluate(_ context: String) -> Int {
+        return context.components(separatedBy: "加")
+            .flatMap { Int($0) }
+            .reduce(0, +)
+    }
+}
+
+let c = MyAdditionExpression()
+c.evaluate("1加1") // OUTPUT: 2
+```
+
+-------
+## Iterator 迭代器模式
+
+> 迭代器就像回转寿司，保证每一道菜品都能得到展示。
+
+![](http://www.sohu.com/a/207894434_99978064)
+> 配图：http://www.sohu.com/a/207894434_99978064
+
+**官方定义**
+
+> 提供一种方法顺序访问一个聚合对象中各个元素, 而又无须暴露该对象的内部表示。
+
+迭代器就是能用hasNext和Next来遍历的一种集合元素。
+
+他很像责任链，但是责任链是一个随时可断的链条（有可能在某一个节点不再把责任下放），他不强调一次完整的遍历。迭代器更像一次次的循环，每次循环都强调完整性，所以更适合集合的场景。
+
+还有一个区别是迭代器是提供元素，而责任链在每一个经手人那做业务。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228d3d31b98ecd?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol AbstractIterator {
+    func hasNext() -> Bool
+    func next() -> Int?
+}
+
+class ConcreteIterator: AbstractIterator {
+    private var currentIndex = 0
+    var elements = [Int]()
+    
+
+    func next() -> Int? {
+        guard currentIndex < elements.count else { currentIndex = 0; return nil }
+        defer { currentIndex += 1 }
+        return elements[currentIndex]
+    }
+    
+    func hasNext() -> Bool {
+        guard currentIndex < elements.count else { currentIndex = 0; return false }
+        return elements[currentIndex] != nil
+    }
+}
+
+protocol AbstractCollection {
+    func makeIterator() -> AbstractIterator
+}
+
+class ConcreteCollection: AbstractCollection {
+    let iterator = ConcreteIterator()
+    func add(_ e: Int) {
+        iterator.elements.append(e)
+    }
+    func makeIterator() -> AbstractIterator {
+        return iterator
+    }
+}
+
+let c = ConcreteCollection()
+c.add(1)
+c.add(2)
+c.add(3)
+
+let iterator = c.makeIterator()
+while iterator.hasNext() {
+    print(iterator.next() as Any)
+}
+```
+
+-------
+
+## Mediator 中介模式
+
+> 中介模式是对象间发消息的传话筒。
+
+![](http://www.quanjing.com/imgbuy/top-959496.html)
+> 配图：http://www.quanjing.com/imgbuy/top-959496.html
+
+**官方定义**
+
+> 用一个中介对象来封装一系列的对象交互，中介者使各对象不需要显式地相互引用，从而使其耦合松散，而且可以独立地改变它们之间的交互。
+
+中介模式对于通信关系复杂的系统有很好的解耦效果
+
+它和观察者模式很像，区别在于观察者是不关心接受方的广播，中介者是介入两个（或多个）对象之间的定点消息传递。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228d53f4b53f69?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Receiver {
+    func receive(message: String)
+}
+
+protocol Mediator: class {
+    func notify(message: String)
+    func addReceiver(_ receiver: Receiver)
+}
+
+class ConcreteMediator: Mediator {
+    var recipients = [Receiver]()
+    func notify(message: String) {
+        recipients.forEach { $0.receive(message: message) }
+    }
+    func addReceiver(_ receiver: Receiver) {
+        recipients.append(receiver)
+    }
+}
+
+protocol Component: Receiver {
+    var mediator: Mediator? { get }
+}
+
+struct ConcreteComponent: Component {
+    weak var mediator: Mediator?
+    var name: String
+    func receive(message: String) {
+        print(name, " receive: ", message)
+    }
+}
+
+var mediator = ConcreteMediator()
+
+let c1 = ConcreteComponent(mediator: mediator, name: "c1")
+let c2 = ConcreteComponent(mediator: mediator, name: "c2")
+let c3 = ConcreteComponent(mediator: mediator, name: "c3")
+
+mediator.addReceiver(c1)
+mediator.addReceiver(c2)
+mediator.addReceiver(c3)
+
+//c1  receive:  hi
+//c2  receive:  hi
+//c3  receive:  hi
+c1.mediator?.notify(message: "hi")
+```
+
+-------
+
+## Memento 备忘录模式
+
+> 备忘录就是游戏存档。
+
+![](http://gearnuke.com/wp-content/uploads/2015/05/witcher3-ps4-savedata-2.jpg)
+> 配图：http://gearnuke.com/wp-content/uploads/2015/05/witcher3-ps4-savedata-2.jpg
+
+**官方定义**
+
+> 在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。
+
+这个模式有两个角色，一个是要存储的类型本身(Memento)和执行存储操作的保管人(Caretaker)。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228d64aa233b5b?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+typealias Memento = [String: String] // chatper: level
+protocol MementoConvertible {
+    var memento: Memento { get }
+    init?(memento: Memento)
+}
+
+class GameState: MementoConvertible {
+    var memento: Memento {
+        return [chapter: level]
+    }
+    var chapter: String
+    var level: String
+    
+    required init?(memento: Memento) {
+        self.chapter = memento.keys.first ?? ""
+        self.level = memento.values.first ?? ""
+    }
+    init(chapter: String, level: String) {
+        self.chapter = chapter
+        self.level = level
+    }
+}
+
+protocol CaretakerConvertible {
+    static func save(memonto: Memento, for key: String)
+    static func loadMemonto(for key: String) -> Memento?
+}
+
+class Caretaker: CaretakerConvertible {
+    static func save(memonto: Memento, for key: String) {
+        let defaults = UserDefaults.standard
+        defaults.set(memonto, forKey: key)
+        defaults.synchronize()
+    }
+    
+    static func loadMemonto(for key: String) -> Memento? {
+        let defaults = UserDefaults.standard
+        return defaults.object(forKey: key) as? Memento
+    }
+
+}
+
+let g = GameState(chapter: "Prologue", level: "0")
+// after a while
+g.chapter = "Second"
+g.level = "20"
+// want a break
+Caretaker.save(memonto: g.memento, for: "gamename")
+// load game
+let gameState = Caretaker.loadMemonto(for: "gamename") // ["Second": "20"]
+```
+
+-------
+
+## Observer 观察者模式
+
+> 观察者模式就像预购，支付了就坐等收货，省心省力。
+
+![](http://images.pushsquare.com/news/2015/01/what_the_hecks_going_on_with_playstation_store_pre-orders_in_europe/attachment/0/original.jpg
+> 配图：http://images.pushsquare.com/news/2015/01/what_the_hecks_going_on_with_playstation_store_pre-orders_in_europe/attachment/0/original.jpg
+
+**官方定义**
+
+> 定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。
+
+**观察者模式**定义了对象之间的一对多依赖，这样一来，当一个对象改变状态时，它的所有依赖者都会收到通知并自动更新。
+
+观察者模式适用在一个**被观察者（数据源）要通知多个观察者**的场景。
+
+这个模式主要通过添加一层接口，来把观察者的具体类型擦除，从何实现松耦合。（针对接口编程，而非实现）
+
+观察者模式一个最重要的特点就是它是一种推模型(PUSH)，在很多情况下比拉模型更高效和即时。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228da2e23244fc?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Observable {
+    var observers: [Observer] { get }
+    func add(observer: Observer)
+    func remove(observer: Observer)
+    func notifyObservers()
+}
+
+class ConcreteObservable: Observable {
+    var observers = [Observer]()
+    func add(observer: Observer) {
+        observers.append(observer)
+    }
+    func remove(observer: Observer) {
+        if let index = observers.index(where: { $0 === observer }) {
+            observers.remove(at: index)
+        }
+    }
+    func notifyObservers() {
+        observers.forEach { $0.update() }
+    }
+}
+
+protocol Observer: class {
+    func update()
+}
+
+class ConcreteObserverA: Observer {
+    func update() { print("A") }
+}
+
+class ConcreteObserverB: Observer {
+    func update() { print("B") }
+}
+
+//////////////////////////////////
+
+let observable = ConcreteObservable()
+let a = ConcreteObserverA()
+let b = ConcreteObserverB()
+observable.add(observer: a)
+observable.add(observer: b)
+observable.notifyObservers() // output: A B
+
+observable.remove(observer: b)
+observable.notifyObservers() // output: A
+```
+
+-------
+
+## State 状态模式
+
+> 状态模式就像马里奥吃了各种蘑菇后的变身。
+
+![](http://www.superluigibros.com/images/super_mario_bros_3_power_ups.jpg)
+> 配图：http://www.superluigibros.com/images/super_mario_bros_3_power_ups.jpg
+
+**官方定义**
+> 允许对象在内部状态发生改变时改变它的行为，对象看起来好像修改了它的类。
+
+状态模式很像策略模式，但是他封装的不是算法，而是一个一个本体下的不同状态。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228db1d5c7bca9?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol State {
+    func operation()
+}
+
+class ConcreteStateA: State {
+    func operation() {
+        print("A")
+    }
+}
+
+class ConcreteStateB: State {
+    func operation() {
+        print("B")
+    }
+}
+
+class Context {
+    var state: State = ConcreteStateA()
+    func someMethod() {
+        state.operation()
+    }
+}
+
+let c = Context()
+c.someMethod() // OUTPUT: A
+c.state = ConcreteStateB() // switch state
+c.someMethod() // OUTPUT: B
+```
+
+-------
+
+## Strategy 策略模式
+
+> 策略模式就像不同的交通路线，可以相互替换，都能达到终点。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228dd0637fd07c?imageView2/0/w/1280/h/960/ignore-error/1)
+> 配图：高德地图iOS
+
+**官方定义**
+> 定义一系列的算法,把它们一个个封装起来, 并且使它们可相互替换。
+
+这个模式主要还是在解决一个**稳定的继承树**当遇到**需求变化**时的狼狈。他把变化的几种情况分门别类的封装好，然后把自己变化的部分隔离成一个接口实例(interface/protocol)，让子类继承后来做选择题。
+
+一个需要转变的思维就是：建模一个类的时候不能只局限于物体（object），也可以是行为（behavior）的封装。
+
+用继承来替换interface实现多态的behavior也是理论可行的。这个模式还有一个强大之处：他是动态的。就是至于子类选择了什么行为，不见得是写代码的时候写死的；也可以是类似用户点击一下切换了算法。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228dd3b95a8bda?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol WeaponBehavior {
+    func use()
+}
+
+class SwordBehavior: WeaponBehavior {
+    func use() { print("sword") }
+}
+
+class BowBehavior: WeaponBehavior {
+    func use() { print("bow") }
+}
+
+class Character {
+    var weapon: WeaponBehavior?
+    func attack() {  weapon?.use() }
+}
+
+class Knight: Character {
+    override init() {
+        super.init()
+        weapon = SwordBehavior()
+    }
+}
+
+class Archer: Character {
+    override init() {
+        super.init()
+        weapon = BowBehavior()
+    }
+}
+
+///////////////////////////////////
+
+Knight().attack() // output: sword
+Archer().attack() // output: bow
+```
+
+-------
+
+## Template Method 模板方法模式
+
+> 模板方法就是抽象类衍生出来的继承树。
+
+![](https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3167143621,3882552175&fm=27&gp=0.jpg)
+> 配图：https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3167143621,3882552175&fm=27&gp=0.jpg
+
+**官方定义**
+
+> 定义一个操作中的算法的骨架，而将一些步骤延迟到子类中。模板方法使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。
+
+模板方法指的就是存在在抽象类中的方法声明，由子类具体实现。这样这套方法产生了**一套模具不同产品**的派生效果。
+
+通过抽象类和子类实现多态。
+
+很可惜Swift/Objective-C都没有抽象类, 所以用一般的class来实现
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228def70189866?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+class Soldier {
+    func attack() {} // <-- Template Method
+    private init() {} // <-- avoid creation
+}
+
+class Paladin: Soldier {
+    override func attack() {
+        print("hammer")
+    }
+}
+
+class Archer: Soldier {
+    override func attack() {
+        print("bow")
+    }
+}
+```
+
+-------
+
+## Visitor 访问者模式
+
+> 访问者模式就像一个个酒店，他们都有接待你的接口，你入住后又会利用它的基础设施。
+
+![](https://marketingland.com/wp-content/ml-loads/2014/08/hotel-bell-customer-service-ss-1920.jpg)
+> 配图：https://marketingland.com/wp-content/ml-loads/2014/08/hotel-bell-customer-service-ss-1920.jpg
+
+**官方定义**
+
+> 主要将数据结构与数据操作分离。
+
+号称最复杂的设计模式，先看一下实现代码。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228dfe6161d8d4?imageView2/0/w/1280/h/960/ignore-error/1)
+
+
+```
+protocol Visitor {
+    func visit(_ c: ComponentA)
+    func visit(_ c: ComponentB)
+}
+
+struct ConcreteVisitor: Visitor {
+    func visit(_ c: ComponentA) {
+        c.featureA()
+    }
+    func visit(_ c: ComponentB) {
+        c.featureB()
+    }
+}
+
+protocol Component {
+    func accept(_ v: Visitor)
+}
+
+struct ComponentA: Component {
+    func featureA() {
+        print("Feature A")
+    }
+    func accept(_ v: Visitor) {
+        v.visit(self)
+    }
+}
+
+struct ComponentB: Component {
+    func featureB() {
+        print("Feature B")
+    }
+    func accept(_ v: Visitor) {
+        v.visit(self)
+    }
+}
+
+let components: [Component] = [ComponentA(), ComponentB()]
+components.forEach {
+    $0.accept(ConcreteVisitor())
+}
+```
+
+要理解这个模式需要了解一些概念：
+
+通过这篇文章可以了解到， 其实[设计模式（GoF)中的Visitor模式就是Java解决Double Dispatch的一种应用。](http://www.blogjava.net/chaocai/archive/2009/02/19/255640.html)，
+
+我们用Swift实现一下文中双重派发问题
+
+```
+protocol Event {}
+class BlueEvent: Event {}
+class RedEvent: Event {}
+
+class Handler {
+    func handle(_ e: Event) {
+        print("Event")
+    }
+    func handle(_ r: RedEvent) {
+        print("RedEvent")
+    }
+    func handle(_ b: BlueEvent) {
+        print("BlueEvent")
+    }
+}
+
+let b = BlueEvent()
+let r = RedEvent()
+let c = Handler()
+
+c.handle(b) // OUTPUT: BlueEvent
+c.handle(r) // OUTPUT: RedEvent
+```
+
+验证发现，Swift是支持双重派发的。
+
+那什么是**双重派发（Double Dispatch）**？
+
+要解释这个，要先搞清楚什么是派发**（Dispatch）**。
+
+派发或者说Single Dispatch，Dynamic Dispatch，wiki是这样解释的：
+
+> In most object-oriented systems, the concrete function that is called from a function call in the code depends on the dynamic type of a single object and therefore they are known as single dispatch calls, or simply virtual function calls.
+> 抓要点说，就是多态的情况下，在运行时，虚方法是由哪个具体实现执行了，这样的绑定动作就是派发。
+
+**那什么虚方法？ 看一下wiki的解释：**
+
+> In short, a virtual function defines a target function to be executed, but the target might not be known at compile time.
+> 虚方法就是编译期还没确定实现的方法，我们可以理解成接口中声明的方法。
+
+好，我们现在知道了一次虚方法的绑定就是派发，双重派发就是两次绑定操作。
+
+那双重派发的代码是如何触发派发的呢？
+
+* **overload 重载** 重载产生的多态引起一次派发
+* **override 重写** 接口实现的多态引起第二次派发
+
+理解这些就知道这个模式在折腾什么了。
+
+当然他也有另外的好处，就是可以让具体的业务类可以丢到集合里批量的执行accept visitor。
+
