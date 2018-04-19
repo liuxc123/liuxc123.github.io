@@ -263,4 +263,133 @@ c.f.createProductB(type: 1) // get ConcreteProductB2
 
 有点绕，说完这些感觉我已经中文十级了。总之，我想表达的观点是：**这些工厂模式并不是割裂的存在，而是一个递进的思想。**
 
+-------
+
+## Builder 建造者模式
+
+> 建造者模式就像你委托一个室内设计师装修你的新家
+
+![](http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&pid=Api)
+
+> 配图: http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&pid=Api
+
+**官方定义**
+
+> 将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。
+
+如果说之前的谈到的工厂模式是把创建产品(对象)的工作抽离出去的话，这次要聊的建造者模式，就是把产品内部的组件生产工作抽离出去。这样做的场景，适用于那些有着复杂、规则模块的对象生成流程。换句话说，工厂模式是一个类(工厂)创建另一个类(产品)，而建造者是一个类(产品)自身的属性(组件)构造过程。
+
+对于建造者模式的实现网上也是版本不一：复杂点的版本会引入一个Director的角色，做一个整体上下文，组装更傻瓜化的builder和product。或是抽象一层Builder协议，用不同的具体Builder来构造不同的产品。但我认为这些都模糊了这个模式要传达的焦点，对理解没有帮助，所以这里我选择一个极简的模型。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228bd251c56c84?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+struct Builder {
+    var partA: String
+    var partB: String
+}
+
+struct Product {
+    var partA: String
+    var partB: String
+    init(builder: Builder) {
+        partA = builder.partA
+        partB = builder.partB
+    }
+}
+
+// 通过builder完成产品创建工作
+let b = Builder(partA: "A", partB: "B")
+// 这样产品只需要一个builder就可以完成制作
+let p = Product(builder: b)
+```
+
+我们让Product的生成由自己发起，但是它的组件(属性)全都委托给Builder来实现，而它只需要依赖一个Builder就完成了自身的生产工作。
+
+-------
+
+## Prototype 原型模式
+
+> 原型模式让你有了一个可以源源不断自我赋值的类。
+
+![](http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg)
+> 配图: http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg
+
+**官方定义**
+
+> 用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。
+
+原型模式很简单，你只要实现一个**返回你自己的新对象**的方法即可。这里我采用的实现还不是最简单的，这个interface并不是必须的。
+
+原型模式实现了深拷贝。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228be892b4b350?imageView2/0/w/1280/h/960/ignore-error/1)
+
+```
+protocol Prototype {
+    func clone() -> Prototype
+}
+
+struct Product: Prototype {
+    var title: String
+    func clone() -> Prototype {
+        return Product(title: title)
+    }
+}
+
+let p1 = Product(title: "p1")
+let p2 = p1.clone()
+(p2 as? Product)?.title // OUTPUT: p1
+```
+
+-------
+
+## Singleton 单例模式
+
+> 单例就像一个公司的IT部门，他们是唯一的存在，并且被所有人直接访问。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228bef47904c11?imageslim)
+配图：The IT Crowd
+
+**官方定义**
+> 保证一个类仅有一个实例，并提供一个访问它的全局访问点。
+
+因为第二点常常被忽视，所以过度使用的危害极大，你无从知道调用从何而来，这种`goto`一般的存在会变成维护的噩梦。
+
+单例比较常见的应用是例如数据库，网络框架的全局访问点。
+
+单例其实就是**变种**的原型模式，只不过原型每次返回的是一个拷贝。
+
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228bf3071227f0?imageView2/0/w/1280/h/960/ignore-error/1)
+
+Swift的简单实现：
+
+```
+class Singleton {
+    static let sharedInstance = Singleton()
+    private init() {
+        // 用private防止被new
+    }
+}
+let s  = Singleton.sharedInstance
+let s2 = Singleton() // ERROR: initializer is inaccessible due to 'private' protection level
+```
+
+Swift的完整实现：
+
+```
+class Singleton {
+    static var singleton: Singleton? = nil
+    private init() {}
+    static func sharedInstance() -> Singleton {
+        if singleton == nil {
+            singleton = Singleton()
+        }
+        return singleton!
+    }
+}
+
+let s = Singleton.sharedInstance()
+let s2 = Singleton() // ERROR: initializer is inaccessible due to 'private' protection level
+```
 
