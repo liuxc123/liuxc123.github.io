@@ -140,7 +140,13 @@
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228b6c46c23e40?imageView2/0/w/1280/h/960/ignore-error/1">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228b7414ea9071?imageView2/0/w/1280/h/960/ignore-error/1">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228b775f6ff3af?imageView2/0/w/1280/h/960/ignore-error/1">
-<meta property="og:updated_time" content="2018-04-16T09:11:27.246Z">
+<meta property="og:image" content="http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&pid=Api">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228bd251c56c84?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:image" content="http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228be892b4b350?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228bef47904c11?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/3/15/16228bf3071227f0?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:updated_time" content="2018-04-19T08:29:49.818Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="23个经典设计模式的Swift实现">
 <meta name="twitter:description" content="前言 这是一篇主观的文章，文字解释也尽可能简单，写作目的是一次团队内的知识分享，想让不了解设计模式的同事迅速对这些生词混个脸熟。所以本文适合懂Swift语法，想快速了解23个设计模式大概在讲什么的同学。  基本结构 比喻 让我联想到的一些事物 官方定义 原版定义 UML 不是原版UML 只保留了我觉得核心的部分 代码 Swift实现，这个是本体 讲解 假设已经看过代码的一些零散评注  目录 Cre">
@@ -386,8 +392,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-04-16T17:11:27+08:00">
-                2018-04-16
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-19T16:29:49+08:00">
+                2018-04-19
               </time>
             
           </span>
@@ -458,7 +464,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,684
+                  2,594
                 </span>
               
 
@@ -474,7 +480,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  11
                 </span>
               
             </div>
@@ -587,6 +593,56 @@
 <p>对于<code>Client</code>来说，他只需要知道有一个抽象的工厂能同时生产<code>ProductA</code>和<code>ProductB</code>就行了，那就是图中的Factory。</p>
 <p><strong>重点来了</strong>，这个抽象的<code>Factory</code>是通过“工厂方法”模式把构造过程延迟到子类执行的，也就是说，抽象工厂是建立在工厂方法的基础上的模式。<br>所以抽象工厂，换句话说，就是多个产品线需要绑定在一起，形成一个抽象的综合工厂，由具体的综合工厂来批量实现“工厂方法”的一种更“高级”的模式。</p>
 <h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>有点绕，说完这些感觉我已经中文十级了。总之，我想表达的观点是：<strong>这些工厂模式并不是割裂的存在，而是一个递进的思想。</strong></p>
+<hr>
+<h2 id="Builder-建造者模式"><a href="#Builder-建造者模式" class="headerlink" title="Builder 建造者模式"></a>Builder 建造者模式</h2><blockquote>
+<p>建造者模式就像你委托一个室内设计师装修你的新家</p>
+</blockquote>
+<p><img src="http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&amp;pid=Api" alt=""></p>
+<blockquote>
+<p>配图: <a href="http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&amp;pid=Api" target="_blank" rel="noopener">http://tse2.mm.bing.net/th?id=OIP.N3hIhcOq32Bh6Ezi6q6kGwHaFj&amp;pid=Api</a></p>
+</blockquote>
+<p><strong>官方定义</strong></p>
+<blockquote>
+<p>将一个复杂的构建与其表示相分离，使得同样的构建过程可以创建不同的表示。</p>
+</blockquote>
+<p>如果说之前的谈到的工厂模式是把创建产品(对象)的工作抽离出去的话，这次要聊的建造者模式，就是把产品内部的组件生产工作抽离出去。这样做的场景，适用于那些有着复杂、规则模块的对象生成流程。换句话说，工厂模式是一个类(工厂)创建另一个类(产品)，而建造者是一个类(产品)自身的属性(组件)构造过程。</p>
+<p>对于建造者模式的实现网上也是版本不一：复杂点的版本会引入一个Director的角色，做一个整体上下文，组装更傻瓜化的builder和product。或是抽象一层Builder协议，用不同的具体Builder来构造不同的产品。但我认为这些都模糊了这个模式要传达的焦点，对理解没有帮助，所以这里我选择一个极简的模型。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/15/16228bd251c56c84?imageView2/0/w/1280/h/960/ignore-error/1" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">struct Builder &#123;</span><br><span class="line">    var partA: String</span><br><span class="line">    var partB: String</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Product &#123;</span><br><span class="line">    var partA: String</span><br><span class="line">    var partB: String</span><br><span class="line">    init(builder: Builder) &#123;</span><br><span class="line">        partA = builder.partA</span><br><span class="line">        partB = builder.partB</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 通过builder完成产品创建工作</span><br><span class="line">let b = Builder(partA: &quot;A&quot;, partB: &quot;B&quot;)</span><br><span class="line">// 这样产品只需要一个builder就可以完成制作</span><br><span class="line">let p = Product(builder: b)</span><br></pre></td></tr></table></figure>
+<p>我们让Product的生成由自己发起，但是它的组件(属性)全都委托给Builder来实现，而它只需要依赖一个Builder就完成了自身的生产工作。</p>
+<hr>
+<h2 id="Prototype-原型模式"><a href="#Prototype-原型模式" class="headerlink" title="Prototype 原型模式"></a>Prototype 原型模式</h2><blockquote>
+<p>原型模式让你有了一个可以源源不断自我赋值的类。</p>
+</blockquote>
+<p><img src="http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg" alt=""></p>
+<blockquote>
+<p>配图: <a href="http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg" target="_blank" rel="noopener">http://thumbs.dreamstime.com/z/cell-division-two-cells-divide-osmosis-background-other-cells-48181492.jpg</a></p>
+</blockquote>
+<p><strong>官方定义</strong></p>
+<blockquote>
+<p>用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</p>
+</blockquote>
+<p>原型模式很简单，你只要实现一个<strong>返回你自己的新对象</strong>的方法即可。这里我采用的实现还不是最简单的，这个interface并不是必须的。</p>
+<p>原型模式实现了深拷贝。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/15/16228be892b4b350?imageView2/0/w/1280/h/960/ignore-error/1" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">protocol Prototype &#123;</span><br><span class="line">    func clone() -&gt; Prototype</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">struct Product: Prototype &#123;</span><br><span class="line">    var title: String</span><br><span class="line">    func clone() -&gt; Prototype &#123;</span><br><span class="line">        return Product(title: title)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let p1 = Product(title: &quot;p1&quot;)</span><br><span class="line">let p2 = p1.clone()</span><br><span class="line">(p2 as? Product)?.title // OUTPUT: p1</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Singleton-单例模式"><a href="#Singleton-单例模式" class="headerlink" title="Singleton 单例模式"></a>Singleton 单例模式</h2><blockquote>
+<p>单例就像一个公司的IT部门，他们是唯一的存在，并且被所有人直接访问。</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/15/16228bef47904c11?imageslim" alt=""><br>配图：The IT Crowd</p>
+<p><strong>官方定义</strong></p>
+<blockquote>
+<p>保证一个类仅有一个实例，并提供一个访问它的全局访问点。</p>
+</blockquote>
+<p>因为第二点常常被忽视，所以过度使用的危害极大，你无从知道调用从何而来，这种<code>goto</code>一般的存在会变成维护的噩梦。</p>
+<p>单例比较常见的应用是例如数据库，网络框架的全局访问点。</p>
+<p>单例其实就是<strong>变种</strong>的原型模式，只不过原型每次返回的是一个拷贝。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/3/15/16228bf3071227f0?imageView2/0/w/1280/h/960/ignore-error/1" alt=""></p>
+<p>Swift的简单实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">class Singleton &#123;</span><br><span class="line">    static let sharedInstance = Singleton()</span><br><span class="line">    private init() &#123;</span><br><span class="line">        // 用private防止被new</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">let s  = Singleton.sharedInstance</span><br><span class="line">let s2 = Singleton() // ERROR: initializer is inaccessible due to &apos;private&apos; protection level</span><br></pre></td></tr></table></figure>
+<p>Swift的完整实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Singleton &#123;</span><br><span class="line">    static var singleton: Singleton? = nil</span><br><span class="line">    private init() &#123;&#125;</span><br><span class="line">    static func sharedInstance() -&gt; Singleton &#123;</span><br><span class="line">        if singleton == nil &#123;</span><br><span class="line">            singleton = Singleton()</span><br><span class="line">        &#125;</span><br><span class="line">        return singleton!</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">let s = Singleton.sharedInstance()</span><br><span class="line">let s2 = Singleton() // ERROR: initializer is inaccessible due to &apos;private&apos; protection level</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -657,7 +713,7 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/04/18/Swift访问控制/" rel="prev" title="Swift访问控制">
+              <a href="/2018/04/18/iOS/Swift访问控制/" rel="prev" title="Swift访问控制">
                 Swift访问控制 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -845,7 +901,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">2.</span> <span class="nav-text">基本结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">3.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">4.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无工厂-Non-Factory"><span class="nav-number">4.1.</span> <span class="nav-text">无工厂 Non-Factory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂-Simple-Factory"><span class="nav-number">4.2.</span> <span class="nav-text">简单工厂 Simple Factory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法-Factory-Method"><span class="nav-number">4.3.</span> <span class="nav-text">工厂方法 Factory Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂-Abstract-Factory"><span class="nav-number">4.4.</span> <span class="nav-text">抽象工厂 Abstract Factory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本结构"><span class="nav-number">2.</span> <span class="nav-text">基本结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">3.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#工厂模式"><span class="nav-number">4.</span> <span class="nav-text">工厂模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#无工厂-Non-Factory"><span class="nav-number">4.1.</span> <span class="nav-text">无工厂 Non-Factory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单工厂-Simple-Factory"><span class="nav-number">4.2.</span> <span class="nav-text">简单工厂 Simple Factory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工厂方法-Factory-Method"><span class="nav-number">4.3.</span> <span class="nav-text">工厂方法 Factory Method</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#抽象工厂-Abstract-Factory"><span class="nav-number">4.4.</span> <span class="nav-text">抽象工厂 Abstract Factory</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#总结"><span class="nav-number">4.4.1.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Builder-建造者模式"><span class="nav-number">5.</span> <span class="nav-text">Builder 建造者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Prototype-原型模式"><span class="nav-number">6.</span> <span class="nav-text">Prototype 原型模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Singleton-单例模式"><span class="nav-number">7.</span> <span class="nav-text">Singleton 单例模式</span></a></li></ol></div>
             
 
           </div>
@@ -880,7 +936,7 @@
     
       <span class="post-meta-item-text">博客全站共&#58;</span>
     
-    <span title="博客全站共">61.4k&nbsp字</span>
+    <span title="博客全站共">62.4k&nbsp字</span>
   
 </div>
 
