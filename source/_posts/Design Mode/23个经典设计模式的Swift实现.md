@@ -436,8 +436,8 @@ Adapter(Adaptee(value: 1)).value // "1"
 
 > 桥接模式就是这么一座桥，它矗立在具体和抽象之间，当你调用的时候只看到了抽象，但是它内部实现时“桥接”到了具体。
 
-![](https://refactoring.guru/design-patterns/bridge)
-> 配图: https://refactoring.guru/design-patterns/bridge
+![](https://user-gold-cdn.xitu.io/2018/3/15/16228c4c4b5fc92c?imageView2/0/w/1280/h/960/ignore-error/1)
+> 配图: https://user-gold-cdn.xitu.io/2018/3/15/16228c4c4b5fc92c?imageView2/0/w/1280/h/960/ignore-error/1
 
 **官方定义**
 > 将抽象部分与实现部分分离，使它们都可以独立的变化。
