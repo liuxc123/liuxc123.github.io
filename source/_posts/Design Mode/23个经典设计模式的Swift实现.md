@@ -2,7 +2,6 @@
 title: 23个经典设计模式的Swift实现
 date: 2018-04-16 16:27:56
 category: 
-- iOS
 - Design Mode
 tags:
 - iOS
