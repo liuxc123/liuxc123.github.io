@@ -33,19 +33,24 @@ tags:
 当我们不实现`loadView`的时候打印结果:
 
 ```
-2017-04-15 12:05:32.974 UIViewController和UIView生命周期加载和卸载[59883:1192231] initWithNibName
-2017-04-15 12:05:32.987 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewDidLoad
-2017-04-15 12:05:32.987 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewWillAppear
-2017-04-15 12:05:32.996 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewWillLayoutSubviews
-2017-04-15 12:05:32.997 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewDidLayoutSubviews
-2017-04-15 12:05:33.002 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewWillLayoutSubviews
-2017-04-15 12:05:33.002 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewDidLayoutSubviews
-2017-04-15 12:05:33.506 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewDidAppear
-2017-04-15 12:05:37.142 UIViewController和UIView生命周期加载和卸载[59883:1192231] clickButton
+2018-04-24 17:26:08.799985+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToSuperview
+2018-04-24 17:26:08.800237+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToWindow
+2018-04-24 17:26:08.800931+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToWindow
+2018-04-24 17:26:08.801165+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToSuperview
+2018-04-24 17:26:08.801499+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
+2018-04-24 17:30:25.472638+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithNibName
+2018-04-24 17:30:25.474095+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadView
+2018-04-24 17:30:25.474368+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLoad
+2018-04-24 17:30:25.474598+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillAppear
+2018-04-24 17:30:25.474752+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadViewIfNeeded
+2018-04-24 17:30:25.484713+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillLayoutSubviews
+2018-04-24 17:30:25.484896+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLayoutSubviews
+2018-04-24 17:30:25.987213+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidAppear
+2018-04-24 17:30:25.987213+0800 UIViewController和UIView生命周期加载和卸载[59883:1192231] clickButton
 //pop以后
-2017-04-15 12:05:42.334 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewWillDisappear
-2017-04-15 12:05:42.837 UIViewController和UIView生命周期加载和卸载[59883:1192231] viewDidDisappear
-2017-04-15 12:05:42.838 UIViewController和UIView生命周期加载和卸载[59883:1192231] dealloc
+2018-04-24 17:31:24.384741+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillDisappear
+2018-04-24 17:31:24.888131+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidDisappear
+2018-04-24 17:31:24.888403+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 我发现一个很奇怪的现象。如果用XIB加载的控制器，并且实现了一个空loadView,那么我们在XIB设置的视图都失效了，应该是系统返回了一个默认的视图覆盖了。但是用Storyboard加载的视图，实现一个空的`loadView`则不会丢失Storyboard里面的视图，`这个是用XIB和Storyboard的一个注意点`。
@@ -72,18 +77,19 @@ tags:
 运行结果：
 
 ```
-2017-04-15 12:26:45.364 UIViewController和UIView生命周期加载和卸载[59932:1194239] initWithCoder
-2017-04-15 12:26:45.365 UIViewController和UIView生命周期加载和卸载[59932:1194239] awakeFromNib
-2017-04-15 12:26:45.368 UIViewController和UIView生命周期加载和卸载[59932:1194239] loadView
-2017-04-15 12:26:45.368 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLoad
-2017-04-15 12:26:45.368 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillAppear
-2017-04-15 12:26:45.372 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillLayoutSubviews
-2017-04-15 12:26:45.373 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLayoutSubviews
-2017-04-15 12:26:45.877 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidAppear
+2018-04-24 17:31:49.174073+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithCoder
+2018-04-24 17:31:49.174343+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] awakeFromNib
+2018-04-24 17:31:49.178285+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadView
+2018-04-24 17:31:49.178582+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLoad
+2018-04-24 17:31:49.178791+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillAppear
+2018-04-24 17:31:49.178980+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadViewIfNeeded
+2018-04-24 17:31:49.188183+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillLayoutSubviews
+2018-04-24 17:31:49.188405+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLayoutSubviews
+2018-04-24 17:31:49.691875+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidAppear
 //pop以后
-2017-04-15 12:26:50.669 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillDisappear
-2017-04-15 12:26:51.172 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidDisappear
-2017-04-15 12:26:51.172 UIViewController和UIView生命周期加载和卸载[59932:1194239] dealloc
+2018-04-24 17:32:04.990075+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillDisappear
+2018-04-24 17:32:05.493917+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidDisappear
+2018-04-24 17:32:05.494169+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 对于Storyboard，使用一个空的`loadView`没有影响。
@@ -103,19 +109,18 @@ tags:
 运行结果：
 
 ```
-2017-04-15 12:30:25.962 UIViewController和UIView生命周期加载和卸载[59932:1194239] initWithCoder
-2017-04-15 12:30:25.963 UIViewController和UIView生命周期加载和卸载[59932:1194239] loadView
-2017-04-15 12:30:25.963 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLoad
-2017-04-15 12:30:25.963 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillAppear
-2017-04-15 12:30:25.967 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillLayoutSubviews
-2017-04-15 12:30:25.967 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLayoutSubviews
-2017-04-15 12:30:25.968 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillLayoutSubviews
-2017-04-15 12:30:25.968 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLayoutSubviews
-2017-04-15 12:30:26.470 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidAppear
+2018-04-24 17:32:24.710172+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithCoder
+2018-04-24 17:32:24.711632+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadView
+2018-04-24 17:32:24.711926+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLoad
+2018-04-24 17:32:24.712247+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillAppear
+2018-04-24 17:32:24.712434+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadViewIfNeeded
+2018-04-24 17:32:24.722093+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillLayoutSubviews
+2018-04-24 17:32:24.722220+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLayoutSubviews
+2018-04-24 17:32:25.223966+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidAppear
 //pop以后
-2017-04-15 12:30:28.034 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillDisappear
-2017-04-15 12:30:28.537 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidDisappear
-2017-04-15 12:30:28.537 UIViewController和UIView生命周期加载和卸载[59932:1194239] dealloc
+2018-04-24 17:32:39.395215+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillDisappear
+2018-04-24 17:32:39.898003+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidDisappear
+2018-04-24 17:32:39.898269+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 ### 2.4 用代码加载UIViewController
@@ -132,20 +137,18 @@ tags:
 运行结果：
 
 ```
-2017-04-15 12:31:48.785 UIViewController和UIView生命周期加载和卸载[59932:1194239] initWithNibName
-2017-04-15 12:31:48.786 UIViewController和UIView生命周期加载和卸载[59932:1194239] init
-2017-04-15 12:31:48.787 UIViewController和UIView生命周期加载和卸载[59932:1194239] loadView
-2017-04-15 12:31:48.787 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLoad
-2017-04-15 12:31:48.788 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillAppear
-2017-04-15 12:31:48.792 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillLayoutSubviews
-2017-04-15 12:31:48.792 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLayoutSubviews
-2017-04-15 12:31:48.792 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillLayoutSubviews
-2017-04-15 12:31:48.792 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidLayoutSubviews
-2017-04-15 12:31:49.293 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidAppear
+2018-04-24 17:32:56.444591+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithNibName
+2018-04-24 17:32:56.446164+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadView
+2018-04-24 17:32:56.446451+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLoad
+2018-04-24 17:32:56.446689+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillAppear
+2018-04-24 17:32:56.446863+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] loadViewIfNeeded
+2018-04-24 17:32:56.456733+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillLayoutSubviews
+2018-04-24 17:32:56.456898+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidLayoutSubviews
+2018-04-24 17:32:56.958470+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidAppear
 //pop以后
-2017-04-15 12:31:55.594 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewWillDisappear
-2017-04-15 12:31:56.098 UIViewController和UIView生命周期加载和卸载[59932:1194239] viewDidDisappear
-2017-04-15 12:31:56.098 UIViewController和UIView生命周期加载和卸载[59932:1194239] dealloc
+2018-04-24 17:33:06.696999+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewWillDisappear
+2018-04-24 17:33:07.200255+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] viewDidDisappear
+2018-04-24 17:33:07.200511+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 ## 3 加载UIView
@@ -164,19 +167,20 @@ tags:
 运行结果：
 
 ```
-2017-04-15 12:33:22.194 UIViewController和UIView生命周期加载和卸载[59932:1194239] initWithCoder
-2017-04-15 12:33:22.195 UIViewController和UIView生命周期加载和卸载[59932:1194239] awakeFromNib
-2017-04-15 12:33:22.195 UIViewController和UIView生命周期加载和卸载[59932:1194239] willMoveToWindow
-2017-04-15 12:33:22.195 UIViewController和UIView生命周期加载和卸载[59932:1194239] willMoveToSuperview
-2017-04-15 12:33:22.196 UIViewController和UIView生命周期加载和卸载[59932:1194239] didMoveToWindow
-2017-04-15 12:33:22.196 UIViewController和UIView生命周期加载和卸载[59932:1194239] didMoveToSuperview
-2017-04-15 12:33:22.197 UIViewController和UIView生命周期加载和卸载[59932:1194239] layoutSubviews
+2018-04-24 17:33:20.803998+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithCoder
+2018-04-24 17:33:20.804249+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] awakeFromNib
+2018-04-24 17:33:20.804455+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToWindow
+2018-04-24 17:33:20.804610+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToSuperview
+2018-04-24 17:33:20.804996+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToWindow
+2018-04-24 17:33:20.805238+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToSuperview
+2018-04-24 17:33:20.805362+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] setNeedsLayout
+2018-04-24 17:33:20.805966+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] layoutSubviews
 //这里是点击移除以后
-2017-04-15 12:33:25.769 UIViewController和UIView生命周期加载和卸载[59932:1194239] willMoveToSuperview
-2017-04-15 12:33:25.770 UIViewController和UIView生命周期加载和卸载[59932:1194239] willMoveToWindow
-2017-04-15 12:33:25.771 UIViewController和UIView生命周期加载和卸载[59932:1194239] didMoveToWindow
-2017-04-15 12:33:25.771 UIViewController和UIView生命周期加载和卸载[59932:1194239] didMoveToSuperview
-2017-04-15 12:33:25.771 UIViewController和UIView生命周期加载和卸载[59932:1194239] dealloc
+2018-04-24 17:33:32.628030+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToSuperview
+2018-04-24 17:33:32.628204+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToWindow
+2018-04-24 17:33:32.628591+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToWindow
+2018-04-24 17:33:32.628709+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToSuperview
+2018-04-24 17:33:32.628892+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 ### 3.2 用代码加载UIView
@@ -195,20 +199,20 @@ tags:
 运行结果：
 
 ```
-2017-04-15 12:38:57.562 UIViewController和UIView生命周期加载和卸载[60323:1208772] initWithFrame
-2017-04-15 12:38:57.562 UIViewController和UIView生命周期加载和卸载[60323:1208772] init
-2017-04-15 12:38:57.562 UIViewController和UIView生命周期加载和卸载[60323:1208772] willMoveToWindow
-2017-04-15 12:38:57.563 UIViewController和UIView生命周期加载和卸载[60323:1208772] willMoveToSuperview
-2017-04-15 12:38:57.563 UIViewController和UIView生命周期加载和卸载[60323:1208772] didMoveToWindow
-2017-04-15 12:38:57.563 UIViewController和UIView生命周期加载和卸载[60323:1208772] didMoveToSuperview
-2017-04-15 12:38:57.564 UIViewController和UIView生命周期加载和卸载[60323:1208772] layoutSubviews
+2018-04-24 17:33:47.292690+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] initWithFrame
+2018-04-24 17:33:47.292908+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] init
+2018-04-24 17:33:47.293115+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToWindow
+2018-04-24 17:33:47.293290+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToSuperview
+2018-04-24 17:33:47.293542+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToWindow
+2018-04-24 17:33:47.293773+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToSuperview
+2018-04-24 17:33:47.294269+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] layoutSubviews
 //点击移除以后
-2017-04-15 12:39:02.751 UIViewController和UIView生命周期加载和卸载[60323:1208772] willMoveToSuperview
-2017-04-15 12:39:02.752 UIViewController和UIView生命周期加载和卸载[60323:1208772] willMoveToWindow
-2017-04-15 12:39:02.752 UIViewController和UIView生命周期加载和卸载[60323:1208772] didMoveToWindow
-2017-04-15 12:39:02.752 UIViewController和UIView生命周期加载和卸载[60323:1208772] didMoveToSuperview
-2017-04-15 12:39:02.752 UIViewController和UIView生命周期加载和卸载[60323:1208772] 点击移除
-2017-04-15 12:39:02.753 UIViewController和UIView生命周期加载和卸载[60323:1208772] dealloc
+2018-04-24 17:34:03.861096+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToSuperview
+2018-04-24 17:34:03.861271+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] willMoveToWindow
+2018-04-24 17:34:03.861589+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToWindow
+2018-04-24 17:34:03.861691+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] didMoveToSuperview
+2018-04-24 17:34:03.861847+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] 点击移除
+2018-04-24 17:34:03.862060+0800 UIViewController和UIView生命周期加载和卸载[42121:1546481] dealloc
 ```
 
 ## 4 总结
