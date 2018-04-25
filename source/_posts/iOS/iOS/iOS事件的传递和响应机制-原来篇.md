@@ -5,7 +5,6 @@ categoty:
 - iOS
 tags:
 - iOS
-- Swift
 ---
 
 ## 前言
