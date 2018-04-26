@@ -114,7 +114,7 @@
 
 
 
-  <meta name="keywords" content="hexo," />
+  <meta name="keywords" content="iOS,Objective-C,Runtime," />
 
 
 
@@ -127,18 +127,20 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
-<meta name="keywords" content="hexo">
+<meta name="description" content="前言iOS开发也有几年了，之前一直听说有runtime，也看过其他框架源码中使用过，但是对于具体的原理还是比较模糊，这次通过此次分享让大家加深对于runtime理解。 Runtime的特性主要是消息(方法)传递，如果消息(方法)在对象中找不到，就进行转发，具体怎么实现的呢。我们从下面几个方面探寻Runtime的实现机制。  Runtime介绍 Runtime消息传递 Runtime消息转发 Run">
+<meta name="keywords" content="iOS,Objective-C,Runtime">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2018/03/16/hexo/hello-world/index.html">
+<meta property="og:title" content="Runtime笔记">
+<meta property="og:url" content="http://yoursite.com/2018/04/26/iOS/iOS/Runtime笔记/index.html">
 <meta property="og:site_name" content="liuxc的博客">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="前言iOS开发也有几年了，之前一直听说有runtime，也看过其他框架源码中使用过，但是对于具体的原理还是比较模糊，这次通过此次分享让大家加深对于runtime理解。 Runtime的特性主要是消息(方法)传递，如果消息(方法)在对象中找不到，就进行转发，具体怎么实现的呢。我们从下面几个方面探寻Runtime的实现机制。  Runtime介绍 Runtime消息传递 Runtime消息转发 Run">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-16T01:17:28.678Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/4/1/1628088a3e4f0167?imageView2/0/w/1280/h/960/ignore-error/1">
+<meta property="og:updated_time" content="2018-04-26T09:04:38.617Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Runtime笔记">
+<meta name="twitter:description" content="前言iOS开发也有几年了，之前一直听说有runtime，也看过其他框架源码中使用过，但是对于具体的原理还是比较模糊，这次通过此次分享让大家加深对于runtime理解。 Runtime的特性主要是消息(方法)传递，如果消息(方法)在对象中找不到，就进行转发，具体怎么实现的呢。我们从下面几个方面探寻Runtime的实现机制。  Runtime介绍 Runtime消息传递 Runtime消息转发 Run">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/4/1/1628088a3e4f0167?imageView2/0/w/1280/h/960/ignore-error/1">
 
 
 
@@ -168,13 +170,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/16/hexo/hello-world/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/26/iOS/iOS/Runtime笔记/"/>
 
 
 
 
 
-  <title>Hello World | liuxc的博客</title>
+  <title>Runtime笔记 | liuxc的博客</title>
   
 
 
@@ -335,7 +337,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/16/hexo/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/iOS/iOS/Runtime笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="liuxc">
@@ -352,7 +354,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Runtime笔记</h1>
         
 
         <div class="post-meta">
@@ -364,8 +366,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T09:17:28+08:00">
-                2018-03-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T10:41:58+08:00">
+                2018-04-26
               </time>
             
 
@@ -380,8 +382,8 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-03-16T09:17:28+08:00">
-                2018-03-16
+              <time title="更新于" itemprop="dateModified" datetime="2018-04-26T17:04:38+08:00">
+                2018-04-26
               </time>
             
           </span>
@@ -399,8 +401,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/hexo/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo</span>
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
                   </a>
                 </span>
 
@@ -417,9 +419,9 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/03/16/hexo/hello-world/#comments" itemprop="discussionUrl">
+                <a href="/2018/04/26/iOS/iOS/Runtime笔记/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2018/03/16/hexo/hello-world/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2018/04/26/iOS/iOS/Runtime笔记/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -441,7 +443,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  78
+                  1,894
                 </span>
               
 
@@ -457,7 +459,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -478,15 +480,62 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>iOS开发也有几年了，之前一直听说有runtime，也看过其他框架源码中使用过，但是对于具体的原理还是比较模糊，这次通过此次分享让大家加深对于runtime理解。</p>
+<p>Runtime的特性主要是消息(方法)传递，如果消息(方法)在对象中找不到，就进行转发，具体怎么实现的呢。我们从下面几个方面探寻Runtime的实现机制。</p>
+<ul>
+<li>Runtime介绍</li>
+<li>Runtime消息传递</li>
+<li>Runtime消息转发</li>
+<li>Runtime应用</li>
+</ul>
+<h2 id="Runtime介绍"><a href="#Runtime介绍" class="headerlink" title="Runtime介绍"></a>Runtime介绍</h2><blockquote>
+<p>Objective-C 扩展了 C 语言，并加入了面向对象特性和 Smalltalk 式的消息传递机制。而这个扩展的核心是一个用 C 和 编译语言 写的 Runtime 库。它是 Objective-C 面向对象和动态机制的基石。</p>
+<p>Objective-C 是一个动态语言，这意味着它不仅需要一个编译器，也需要一个运行时系统来动态得创建类和对象、进行消息传递和转发。理解 Objective-C 的 Runtime 机制可以帮我们更好的了解这个语言，适当的时候还能对语言进行扩展，从系统层面解决项目中的一些设计或技术问题。了解 Runtime ，要先了解它的核心 - 消息传递 （Messaging）。</p>
+</blockquote>
+<p><code>Runtime</code>其实有两个版本: “<code>modern</code>” 和 “<code>legacy</code>”。我们现在用的 <code>Objective-C 2.0</code> 采用的是现行 (<code>Modern</code>) 版的 Runtime 系统，只能运行在 <code>iOS</code> 和 <code>macOS 10.5</code> 之后的 <code>64</code> 位程序中。而 macOS 较老的32位程序仍采用 <code>Objective-C 1</code> 中的（早期）<code>Legacy</code> 版本的 <code>Runtime</code> 系统。这两个版本最大的区别在于当你更改一个类的实例变量的布局时，在早期版本中你需要重新编译它的子类，而现行版就不需要。</p>
+<p><code>Runtime</code> 基本是用 <code>C</code> 和<code>汇编</code>写的，可见苹果为了动态系统的高效而作出的努力。你可以在<a href="https://opensource.apple.com/source/objc4/" target="_blank" rel="noopener">这里</a>下到苹果维护的开源代码。苹果和GNU各自维护一个开源的 <a href="https://github.com/RetVal/objc-runtime" target="_blank" rel="noopener">runtime</a> 版本，这两个版本之间都在努力的保持一致。</p>
+<p>平时的业务中主要是使用<a href="https://developer.apple.com/documentation/objectivec/objective_c_runtime#//apple_ref/doc/uid/TP40001418-CH1g-126286" target="_blank" rel="noopener">官方Api</a>，解决我们框架性的需求。</p>
+<p>高级编程语言想要成为可执行文件需要先编译为汇编语言再汇编为机器语言，机器语言也是计算机能够识别的唯一语言，但是<code>OC</code>并不能直接编译为汇编语言，而是要先转写为纯C语言再进行编译和汇编的操作，从<code>OC</code>到<code>C</code>语言的过渡就是由runtime来实现的。然而我们使用OC进行面向对象开发，而<code>C</code>语言更多的是面向过程开发，这就需要将面向对象的类转变为面向过程的结构体。</p>
+<h2 id="Runtime消息传递"><a href="#Runtime消息传递" class="headerlink" title="Runtime消息传递"></a>Runtime消息传递</h2><p>一个对象的方法像这样<code>[obj foo]</code>，编译器转成消息发送<code>objc_msgSend(obj, foo)</code>，<code>Runtime</code>时执行的流程是这样的：</p>
+<ul>
+<li>首先，通过<code>obj</code>的<code>isa</code>指针找到它的<code>class</code>；</li>
+<li>在<code>class</code>的<code>method list</code>找<code>foo</code>；</li>
+<li>如果<code>class</code>中没有找到<code>foo</code>，继续往它的<code>superclass</code>中找；</li>
+<li>一但找到<code>foo</code>这个函数，就去执行它的实现<code>IMP</code></li>
+</ul>
+<p>但这种实现有个问题，效率低。但是一个<code>class</code>往往只有<code>20%</code>的函数会被经常调用，可能占总调用次数的<code>80%</code>。每个消息都要遍历一次<code>objc_method_list</code>并不合理。如果把经常被调用的函数缓存下来，那可以大大提高函数查询的效率。这也就是<code>objc_class</code>中另一个重要成员<code>objc_cache</code>做的事情 - 再找到<code>foo</code>之后，把<code>foo</code>的<code>method_name</code>作为<code>key</code>，<code>method_imp</code>作为<code>value</code>给存起来。当再次收到<code>foo</code>消息的时候，可以直接在<code>cache</code>里找到，避免去遍历<code>objc_method_list</code>。从前面的源代码可以看到<code>objc_cache</code>是存在<code>objc_class</code>结构体中的。</p>
+<p>objec_msgSend的方法定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OBJC_EXPORT id objc_msgSend(id self, SEL op, ...)</span><br></pre></td></tr></table></figure>
+<p>那消息传递是怎么实现的呢？我们看看对象(object)，类(class)，方法(method)这几个的结构体：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">//对象</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line">//类</span><br><span class="line">struct objc_class &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">#if !__OBJC2__</span><br><span class="line">    Class super_class                                        OBJC2_UNAVAILABLE;</span><br><span class="line">    const char *name                                         OBJC2_UNAVAILABLE;</span><br><span class="line">    long version                                             OBJC2_UNAVAILABLE;</span><br><span class="line">    long info                                                OBJC2_UNAVAILABLE;</span><br><span class="line">    long instance_size                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br><span class="line">//方法列表</span><br><span class="line">struct objc_method_list &#123;</span><br><span class="line">    struct objc_method_list *obsolete                        OBJC2_UNAVAILABLE;</span><br><span class="line">    int method_count                                         OBJC2_UNAVAILABLE;</span><br><span class="line">#ifdef __LP64__</span><br><span class="line">    int space                                                OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line">    /* variable length structure */</span><br><span class="line">    struct objc_method method_list[1]                        OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;                                                            OBJC2_UNAVAILABLE;</span><br><span class="line">//方法</span><br><span class="line">struct objc_method &#123;</span><br><span class="line">    SEL method_name                                          OBJC2_UNAVAILABLE;</span><br><span class="line">    char *method_types                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    IMP method_imp                                           OBJC2_UNAVAILABLE;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>系统首先找到消息的接收对象，然后通过对象的<code>isa</code>找到它的类。</li>
+<li>在它的类中查找<code>method_list</code>，是否有<code>selector</code>方法。</li>
+<li>没有则查找父类的<code>method_list</code>。</li>
+<li>找到对应的<code>method</code>，执行它的<code>IMP</code>。</li>
+<li>转发<code>IMP</code>的<code>return</code>值。</li>
+</ol>
+<p>下面讲讲消息传递用到的一些概念：</p>
+<ul>
+<li>类对象(objc_class)</li>
+<li>实例(objc_object)</li>
+<li>元类(Meta Class)</li>
+<li>Method(objc_method)</li>
+<li>SEL(objc_selector)</li>
+<li>IMP</li>
+<li>类缓存(objc_cache)</li>
+<li>Category(objc_category)</li>
+</ul>
+<h3 id="类对象-objc-class"><a href="#类对象-objc-class" class="headerlink" title="类对象(objc_class)"></a>类对象(objc_class)</h3><p><code>Objective-C</code>类是由<code>Class</code>类型来表示的，它实际上是一个指向<code>objc_class</code>结构体的指针。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">typedef struct objc_class *Class;</span><br></pre></td></tr></table></figure>
+<p>查看<code>objc/runtime.h</code>中<code>objc_class</code>结构体的定义如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">struct objc_class &#123;</span><br><span class="line">    Class _Nonnull isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line"></span><br><span class="line">#if !__OBJC2__</span><br><span class="line">    Class _Nullable super_class                              OBJC2_UNAVAILABLE;</span><br><span class="line">    const char * _Nonnull name                               OBJC2_UNAVAILABLE;</span><br><span class="line">    long version                                             OBJC2_UNAVAILABLE;</span><br><span class="line">    long info                                                OBJC2_UNAVAILABLE;</span><br><span class="line">    long instance_size                                       OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_ivar_list * _Nullable ivars                  OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_method_list * _Nullable * _Nullable methodLists                    OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_cache * _Nonnull cache                       OBJC2_UNAVAILABLE;</span><br><span class="line">    struct objc_protocol_list * _Nullable protocols          OBJC2_UNAVAILABLE;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">&#125; OBJC2_UNAVAILABLE;</span><br></pre></td></tr></table></figure>
+<p><code>struct objc_class</code>结构体定义了很多变量，通过命名不难发现，结构体里保存了指向父类的指针、类的名字、版本、实例大小、实例变量列表、方法列表、缓存、遵守的协议列表等，一个类包含的信息也不就正是这些吗？没错，类对象就是一个结构体<code>struct objc_class</code>，这个结构体存放的数据称为元数据（<code>motadata</code>），该结构体的第一个成员变量也是<code>isa</code>指针，这就说明了<code>Class</code>本身其实也是一个对象，因此我们称之为类对象，类对象在编译期产生用于创建实例对象，是单例。</p>
+<h3 id="实例-objc-object"><a href="#实例-objc-object" class="headerlink" title="实例(objc_object)"></a>实例(objc_object)</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">/// Represents an instance of a class.</span><br><span class="line">struct objc_object &#123;</span><br><span class="line">    Class isa  OBJC_ISA_AVAILABILITY;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/// A pointer to an instance of a class.</span><br><span class="line">typedef struct objc_object *id;</span><br></pre></td></tr></table></figure>
+<p>类对象中的元数据存储的都是如何创建一个实例的相关信息，那么类对象和类方法应该从哪里创建呢？<br>就是从<code>isa</code>指针指向的结构体创建，类对象的isa指针指向的我们称之为元类(<code>metaclass</code>)，</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/4/1/1628088a3e4f0167?imageView2/0/w/1280/h/960/ignore-error/1" alt=""></p>
+<h3 id="元类-Meta-Class"><a href="#元类-Meta-Class" class="headerlink" title="元类(Meta Class)"></a>元类(Meta Class)</h3><p>通过上图我们可以看出整个体系构成了一个自闭环，<code>struct objc_object</code>结构体<code>实例</code>它的<code>isa</code>指针指向类对象，类对象的<code>isa</code>指针指向了元类，<code>super_class</code>指针指向父类的类对象，而元类的<code>super_class</code>指针指向了父类的元类，那元类的<code>isa</code>指针又指向了自己。</p>
+<p>元类(Meta Class)是一个类对象的类。在上面我们提到，所有的类自身也是一个对象，我们可以向这个对象发送消息(即调用类方法)。为了调用类方法，这个类的isa指针必须指向一个包含这些类方法的一个<code>objc_class</code>结构体。这就引出了<code>meta-class</code>的概念，元类中保存了创建类对象以及类方法所需的所有信息。任何<code>NSObject</code>继承体系下的<code>meta-class</code>都使用<code>NSObject</code>的<code>meta-class</code>作为自己的所属类，而基类的<code>meta-class</code>的<code>isa</code>指针是指向它自己。</p>
 
       
     </div>
@@ -530,7 +579,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/hexo/" rel="tag"><i class="fa fa-tag"></i> hexo</a>
+            <a href="/tags/iOS/" rel="tag"><i class="fa fa-tag"></i> iOS</a>
+          
+            <a href="/tags/Objective-C/" rel="tag"><i class="fa fa-tag"></i> Objective-C</a>
+          
+            <a href="/tags/Runtime/" rel="tag"><i class="fa fa-tag"></i> Runtime</a>
           
         </div>
       
@@ -543,8 +596,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/15/iOS/代码规范/iOS代码规范/" rel="next" title="iOS代码规范">
-                <i class="fa fa-chevron-left"></i> iOS代码规范
+              <a href="/2018/04/25/iOS/iOS/深入理解RunLoop/" rel="next" title="深入理解RunLoop">
+                <i class="fa fa-chevron-left"></i> 深入理解RunLoop
               </a>
             
           </div>
@@ -552,10 +605,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/26/iOS/源码分析/SDWebImage源码解析/" rel="prev" title="SDWebImage源码解析">
-                SDWebImage源码解析 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -741,7 +790,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime介绍"><span class="nav-number">2.</span> <span class="nav-text">Runtime介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Runtime消息传递"><span class="nav-number">3.</span> <span class="nav-text">Runtime消息传递</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#类对象-objc-class"><span class="nav-number">3.1.</span> <span class="nav-text">类对象(objc_class)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例-objc-object"><span class="nav-number">3.2.</span> <span class="nav-text">实例(objc_object)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#元类-Meta-Class"><span class="nav-number">3.3.</span> <span class="nav-text">元类(Meta Class)</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -922,9 +971,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://yoursite.com/2018/03/16/hexo/hello-world/';
-          this.page.identifier = '2018/03/16/hexo/hello-world/';
-          this.page.title = 'Hello World';
+          this.page.url = 'http://yoursite.com/2018/04/26/iOS/iOS/Runtime笔记/';
+          this.page.identifier = '2018/04/26/iOS/iOS/Runtime笔记/';
+          this.page.title = 'Runtime笔记';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://.disqus.com/embed.js';
